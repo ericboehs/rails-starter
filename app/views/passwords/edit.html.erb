@@ -1,0 +1,44 @@
+<%= render Auth::FormContainerComponent.new(
+  title_key: "auth.reset_password.title"
+) do %>
+  <%= render 'shared/flash_messages' %>
+
+  <%= form_with url: password_path(params[:token]), method: :put, local: true, class: "space-y-6" do |form| %>
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :password,
+      label: t("auth.reset_password.password_label"),
+      type: :password,
+      required: true,
+      autocomplete: "new-password",
+      placeholder: t("auth.placeholders.new_password"),
+      maxlength: 72,
+      autofocus: true
+    ) %>
+
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :password_confirmation,
+      label: t("auth.reset_password.password_confirmation_label"),
+      type: :password,
+      required: true,
+      autocomplete: "new-password",
+      placeholder: t("auth.placeholders.confirm_password"),
+      maxlength: 72
+    ) %>
+
+    <div>
+      <%= render Auth::ButtonComponent.new(
+        text: t("auth.reset_password.submit_button"),
+        type: :submit,
+        variant: :primary,
+        class: "flex w-full justify-center"
+      ) %>
+    </div>
+
+    <%= render Auth::LinkComponent.new(
+      text: t("auth.reset_password.back_to_sign_in"),
+      url: new_session_path
+    ) %>
+  <% end %>
+<% end %>

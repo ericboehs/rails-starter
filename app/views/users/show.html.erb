@@ -1,0 +1,18 @@
+<%= render UserPageComponent.new(title_key: 'users.show.title') do %>
+  <div class="flex flex-col items-center text-center space-y-4">
+    <%= render AvatarComponent.new(user: @user, size: 20, text_size: "2xl") %>
+
+    <div>
+      <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white"><%= @user.email_address %></h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400"><%= t('users.show.member_since', date: @user.created_at.strftime("%B %Y")) %></p>
+    </div>
+
+    <div>
+      <%= render Auth::LinkButtonComponent.new(
+        text: t('users.show.edit_button'),
+        url: edit_user_path,
+        variant: :secondary
+      ) %>
+    </div>
+  </div>
+<% end %>

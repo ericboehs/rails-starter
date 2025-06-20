@@ -3,8 +3,11 @@ require "simplecov"
 
 # SimpleCov configuration
 SimpleCov.start "rails" do
+  # Enable coverage for branches (Ruby 2.5+) - must come before minimum_coverage
+  enable_coverage :branch
+
   # Set minimum coverage percentage
-  minimum_coverage 95
+  minimum_coverage line: 95, branch: 95
 
   # Set coverage percentage precision
   minimum_coverage_by_file 80
@@ -16,6 +19,8 @@ SimpleCov.start "rails" do
   add_filter "/db/"
   add_filter "/bin/"
   add_filter "/test/"
+  add_filter "app/channels/application_cable/connection.rb"
+  add_filter "app/jobs/application_job.rb"
 
   # Group coverage results for better organization
   add_group "Controllers", "app/controllers"
@@ -29,9 +34,6 @@ SimpleCov.start "rails" do
 
   # Use Rails' default profile with some modifications
   track_files "{app,lib}/**/*.rb"
-
-  # Enable coverage for branches (Ruby 2.5+)
-  enable_coverage :branch
 
   # Set up formatters
   formatter SimpleCov::Formatter::MultiFormatter.new([
@@ -53,6 +55,15 @@ module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors)
+
+    # Configure SimpleCov for parallel test execution
+    parallelize_setup do |worker|
+      SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
+    end
+
+    parallelize_teardown do |worker|
+      SimpleCov.result
+    end
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all

@@ -28,4 +28,52 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  app:
+    title: "GitHub Team Auditor"
+    logo_alt: "GitHub Team Auditor"
+
+  navigation:
+    dashboard: "Dashboard"
+    mobile_menu:
+      open: "Open main menu"
+    user_menu:
+      open: "Open user menu"
+      profile: "Your Profile"
+      sign_out: "Sign out"
+
+  dashboard:
+    welcome_title: "Welcome to GitHub Team Auditor"
+    section_title: "Dashboard"
+    welcome_message: "Welcome to GitHub Team Auditor! Team auditing features will be available here soon."
+
+  users:
+    show:
+      title: "Your Profile"
+      member_since: "Member since %{date}"
+      edit_button: "Edit Profile"
+    edit:
+      title: "Edit Profile"
+    form:
+      email_label: "Email address"
+      password_label: "Password"
+      password_confirmation_label: "Password confirmation"
+      password_help: "Leave blank to keep current password"
+      update_button: "Update Profile"
+    avatar:
+      gravatar_description: "Avatar from Gravatar"
+
+  buttons:
+    cancel: "Cancel"
+
+  errors:
+    form_submission_errors: "There were errors with your submission"
+
+  alerts:
+    validation_errors_header: "Please correct the following errors:"
+    dismiss: "Dismiss"
+
+  mailer:
+    password_reset:
+      body_html: "You can reset your password within the next 15 minutes on"
+      body_text: "You can reset your password within the next 15 minutes on this password reset page:"
+      reset_link_text: "this password reset page"

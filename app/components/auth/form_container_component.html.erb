@@ -1,0 +1,17 @@
+<div class="flex min-h-full flex-col px-6 pt-16 pb-4 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <%= image_tag "logo.png", alt: t('app.logo_alt'), class: "mx-auto h-64 w-auto" %>
+    <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
+      <%= title_text %>
+    </h2>
+    <% if subtitle_text %>
+      <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <%= subtitle_text %>
+      </p>
+    <% end %>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
+    <%= content %>
+  </div>
+</div>

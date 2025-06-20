@@ -40,14 +40,9 @@ brakeman --no-pager --quiet
 echo "✅ brakeman security scan passed"
 echo
 
-echo "🧪 Running tests..."
-rails test
-echo "✅ tests passed"
-echo
-
-echo "🧪 Running system tests..."
-rails test:system
-echo "✅ system tests passed"
+echo "🧪 Running all tests..."
+rails test:all
+echo "✅ All tests passed"
 echo
 
 echo "📊 Generating coverage report..."

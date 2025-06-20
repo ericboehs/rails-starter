@@ -1,0 +1,33 @@
+<%= render Auth::FormContainerComponent.new(
+  title_key: "auth.forgot_password.title"
+) do %>
+  <%= render 'shared/flash_messages' %>
+
+  <%= form_with url: passwords_path, local: true, class: "space-y-6" do |form| %>
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :email_address,
+      label: t("auth.forgot_password.email_label"),
+      type: :email,
+      required: true,
+      autocomplete: "username",
+      placeholder: t("auth.placeholders.email"),
+      autofocus: true,
+      value: params[:email_address]
+    ) %>
+
+    <div>
+      <%= render Auth::ButtonComponent.new(
+        text: t("auth.forgot_password.submit_button"),
+        type: :submit,
+        variant: :primary,
+        class: "flex w-full justify-center"
+      ) %>
+    </div>
+
+    <%= render Auth::LinkComponent.new(
+      text: t("auth.forgot_password.back_to_sign_in"),
+      url: new_session_path
+    ) %>
+  <% end %>
+<% end %>

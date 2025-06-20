@@ -1,0 +1,33 @@
+<div class="<%= alert_classes %>">
+  <div class="flex">
+    <div class="shrink-0">
+      <%= icon_svg.html_safe %>
+    </div>
+    <div class="ml-3">
+      <% if has_list? %>
+        <div class="<%= text_classes %>">
+          <p class="font-medium"><%= t('alerts.validation_errors_header') %></p>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <% messages.each do |error_message| %>
+              <li><%= error_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <p class="<%= text_classes %>"><%= message %></p>
+      <% end %>
+    </div>
+    <% if dismissible %>
+      <div class="ml-auto pl-3">
+        <div class="-mx-1.5 -my-1.5">
+          <button type="button" class="<%= dismiss_button_classes %>" data-action="click->alert#dismiss">
+            <span class="sr-only"><%= t('alerts.dismiss') %></span>
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

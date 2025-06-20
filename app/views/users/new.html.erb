@@ -1,0 +1,65 @@
+<%= render Auth::FormContainerComponent.new(
+  title_key: "auth.sign_up.title"
+) do %>
+  <%= render 'shared/flash_messages' %>
+
+  <%= form_with model: @user, local: true, class: "space-y-6" do |form| %>
+    <% if @user.errors.any? %>
+      <div class="mb-4">
+        <%= render AlertComponent.new(
+          messages: @user.errors.full_messages,
+          type: :error
+        ) %>
+      </div>
+    <% end %>
+
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :email_address,
+      label: t("auth.sign_up.email_label"),
+      type: :email,
+      required: true,
+      autocomplete: "username",
+      placeholder: t("auth.placeholders.email"),
+      autofocus: true,
+      error: @user.errors[:email_address].first
+    ) %>
+
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :password,
+      label: t("auth.sign_up.password_label"),
+      type: :password,
+      required: true,
+      autocomplete: "new-password",
+      placeholder: t("auth.placeholders.new_password"),
+      error: @user.errors[:password].first
+    ) %>
+
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :password_confirmation,
+      label: t("auth.sign_up.password_confirmation_label"),
+      type: :password,
+      required: true,
+      autocomplete: "new-password",
+      placeholder: t("auth.placeholders.confirm_password"),
+      error: @user.errors[:password_confirmation].first
+    ) %>
+
+    <div>
+      <%= render Auth::ButtonComponent.new(
+        text: t("auth.sign_up.submit_button"),
+        type: :submit,
+        variant: :primary,
+        class: "flex w-full justify-center"
+      ) %>
+    </div>
+  <% end %>
+
+  <p class="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
+    <%= t("auth.sign_up.already_member") %>
+    <%= link_to t("auth.sign_up.sign_in_link"), new_session_path,
+        class: "font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300" %>
+  </p>
+<% end %>

@@ -1,0 +1,4 @@
+<p>
+  <%= t('mailer.password_reset.body_html') %>
+  <%= link_to t('mailer.password_reset.reset_link_text'), edit_password_url(@user.password_reset_token) %>.
+</p>

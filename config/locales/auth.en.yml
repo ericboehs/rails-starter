@@ -1,0 +1,47 @@
+en:
+  auth:
+    sign_in:
+      title: "Sign in to your account"
+      subtitle: "Welcome back to GitHub Team Auditor"
+      email_label: "Email address"
+      password_label: "Password"
+      submit_button: "Sign in"
+      forgot_password: "Forgot password?"
+      invalid_credentials: "Invalid email or password"
+      not_a_member: "Not a member?"
+      sign_up_link: "Sign up"
+    sign_up:
+      title: "Create your account"
+      subtitle: "Set up your GitHub Team Auditor access"
+      email_label: "Email address"
+      password_label: "Password"
+      password_confirmation_label: "Confirm password"
+      submit_button: "Sign up"
+      already_member: "Already have an account?"
+      sign_in_link: "Sign in"
+    forgot_password:
+      title: "Forgot your password?"
+      subtitle: "Enter your email address and we'll send you a link to reset your password."
+      email_label: "Email address"
+      submit_button: "Send reset instructions"
+      back_to_sign_in: "Back to sign in"
+    reset_password:
+      title: "Reset your password"
+      subtitle: "Enter your new password below."
+      password_label: "New password"
+      password_confirmation_label: "Confirm new password"
+      submit_button: "Update password"
+      back_to_sign_in: "Back to sign in"
+    placeholders:
+      email: "you@example.com"
+      password: "Enter your password"
+      new_password: "Enter your new password"
+      confirm_password: "Confirm your new password"
+    flash:
+      password_reset_sent: "Password reset instructions have been sent to your email."
+      password_updated: "Your password has been updated successfully."
+      invalid_token: "Invalid or expired password reset token."
+      passwords_dont_match: "Passwords don't match."
+    errors:
+      email_taken: "This email address is already registered"
+      invalid_email: "Please enter a valid email address"

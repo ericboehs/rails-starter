@@ -1,0 +1,11 @@
+<% if flash[:alert] %>
+  <div class="mb-4">
+    <%= render AlertComponent.new(message: flash[:alert], type: :error) %>
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <div class="mb-4">
+    <%= render AlertComponent.new(message: flash[:notice], type: :success) %>
+  </div>
+<% end %>

@@ -1,0 +1,50 @@
+<%= render Auth::FormContainerComponent.new(
+  title_key: "auth.sign_in.title"
+) do %>
+  <%= render 'shared/flash_messages' %>
+
+  <%= form_with url: session_path, local: true, class: "space-y-6" do |form| %>
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :email_address,
+      label: t("auth.sign_in.email_label"),
+      type: :email,
+      required: true,
+      autocomplete: "username",
+      placeholder: t("auth.placeholders.email"),
+      autofocus: true,
+      value: params[:email_address]
+    ) %>
+
+    <%= render Auth::InputComponent.new(
+      form: form,
+      field: :password,
+      label: t("auth.sign_in.password_label"),
+      type: :password,
+      required: true,
+      autocomplete: "current-password",
+      placeholder: t("auth.placeholders.password"),
+      maxlength: 72
+    ) %>
+
+    <div class="text-sm text-right">
+      <%= link_to t("auth.sign_in.forgot_password"), new_password_path,
+          class: "font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300" %>
+    </div>
+
+    <div>
+      <%= render Auth::ButtonComponent.new(
+        text: t("auth.sign_in.submit_button"),
+        type: :submit,
+        variant: :primary,
+        class: "flex w-full justify-center"
+      ) %>
+    </div>
+  <% end %>
+
+  <p class="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
+    <%= t("auth.sign_in.not_a_member") %>
+    <%= link_to t("auth.sign_in.sign_up_link"), new_user_path,
+        class: "font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300" %>
+  </p>
+<% end %>

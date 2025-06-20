@@ -1,0 +1,4 @@
+<div class="<%= size_classes %> bg-emerald-600 flex items-center justify-center overflow-hidden">
+  <img class="<%= size_classes %>" src="<%= user.avatar_url(size: 256) %>" alt="<%= user.email_address %>" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+  <span class="<%= text_classes %>"><%= user.initials %></span>
+</div>

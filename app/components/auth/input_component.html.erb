@@ -1,0 +1,26 @@
+<div>
+  <% if forgot_password_link %>
+    <div class="flex items-center justify-between">
+      <%= form.label field, label_text, class: "block text-sm/6 font-medium text-gray-900 dark:text-white", for: field_id %>
+      <div class="text-sm">
+        <%= forgot_password_link %>
+      </div>
+    </div>
+  <% else %>
+    <%= form.label field, label_text, class: "block text-sm/6 font-medium text-gray-900 dark:text-white", for: field_id %>
+  <% end %>
+  <div class="mt-2">
+    <%= form.send("#{type}_field", field,
+          id: field_id,
+          class: input_classes,
+          required: required,
+          autocomplete: autocomplete,
+          placeholder: placeholder,
+          "aria-invalid": error ? "true" : nil,
+          "aria-describedby": error ? "#{field_id}-error" : nil,
+          **options) %>
+  </div>
+  <% if error %>
+    <p class="mt-2 text-sm text-red-600 dark:text-red-400" id="<%= field_id %>-error"><%= error %></p>
+  <% end %>
+</div>
