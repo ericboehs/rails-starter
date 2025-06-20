@@ -1,0 +1,132 @@
+#!/bin/bash
+
+# Script to watch CI status for the current branch
+# Usage: bin/watch-ci [interval_seconds]
+
+set -e
+
+# Default interval (in seconds)
+INTERVAL=${1:-10}
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Clear screen function
+clear_screen() {
+  printf "\033[2J\033[H"
+}
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+  echo "❌ Not in a git repository"
+  exit 1
+fi
+
+# Check if gh CLI is available
+if ! command -v gh >/dev/null 2>&1; then
+  echo "❌ GitHub CLI (gh) not found. Install with: brew install gh"
+  exit 1
+fi
+
+# Get current branch
+BRANCH=$(git branch --show-current)
+if [ -z "$BRANCH" ]; then
+  echo "❌ Not on a branch (detached HEAD)"
+  exit 1
+fi
+
+echo -e "🔍 Watching CI for branch: ${BLUE}$BRANCH${NC}"
+echo "⏱️  Refresh interval: ${INTERVAL}s (press Ctrl+C to stop)"
+echo ""
+
+# Function to display CI status
+show_ci_status() {
+  local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+
+  clear_screen
+  echo -e "🔍 CI Status for branch: ${BLUE}$BRANCH${NC}"
+  echo "⏱️  Last updated: $timestamp (refreshing every ${INTERVAL}s)"
+  echo "📝 Press Ctrl+C to stop watching"
+  echo ""
+
+  # Get PR checks
+  PR_CHECKS=$(gh pr checks 2>/dev/null) || true
+  if [ -n "$PR_CHECKS" ]; then
+    echo "📊 CI Check Results:"
+    echo "===================="
+
+    # Parse and colorize the output
+    while IFS=$'\t' read -r name status duration url; do
+      case "$status" in
+        "pass")
+          echo -e "✅ ${GREEN}$name${NC} - ${duration}"
+          ;;
+        "fail")
+          echo -e "❌ ${RED}$name${NC} - ${duration}"
+          echo -e "   📋 ${BLUE}$url${NC}"
+          ;;
+        "pending")
+          echo -e "⏳ ${YELLOW}$name${NC} - running..."
+          ;;
+        *)
+          echo -e "❓ ${YELLOW}$name${NC} - $status"
+          ;;
+      esac
+    done <<< "$PR_CHECKS"
+
+    # Check if all passed
+    if echo "$PR_CHECKS" | grep -q "fail"; then
+      echo ""
+      echo -e "${RED}❌ Some checks failed${NC}"
+      echo "💡 Use 'gh run view --log-failed' to see failure details"
+      return 1
+    elif echo "$PR_CHECKS" | grep -q "pending"; then
+      echo ""
+      echo -e "${YELLOW}⏳ Checks still running...${NC}"
+      return 0
+    else
+      echo ""
+      echo -e "${GREEN}✅ All checks passed!${NC}"
+      echo "🎉 Exiting since all checks have passed"
+      return 2
+    fi
+  else
+    echo "❓ No PR found for current branch or no CI runs available"
+    echo "💡 Make sure you've pushed your branch and created a PR"
+  fi
+
+  echo ""
+  echo "🛠️  Quick commands:"
+  echo "   gh pr view    - View PR details"
+  echo "   gh pr checks  - Show detailed check status"
+  echo "   gh run list   - List recent runs"
+}
+
+# Initial display
+show_ci_status
+if [ $? -eq 2 ]; then
+  # All checks already passed on initial check
+  exit 0
+fi
+
+# Watch loop
+while true; do
+  sleep $INTERVAL
+  show_ci_status
+  case $? in
+    2)
+      # All checks passed, exit successfully
+      exit 0
+      ;;
+    1)
+      # Some checks failed, continue watching
+      ;;
+    0)
+      # Checks still running, continue watching
+      ;;
+  esac
+done

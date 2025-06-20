@@ -1,0 +1,184 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'nokogiri'
+end
+
+require 'set'
+
+# Path to the SimpleCov HTML report
+coverage_file = File.join(Dir.pwd, 'coverage', 'index.html')
+
+unless File.exist?(coverage_file)
+  puts "❌ No coverage report found at #{coverage_file}"
+  puts 'Run tests first: bin/rails test'
+  exit 1
+end
+
+# Parse the HTML file
+doc = Nokogiri::HTML(File.read(coverage_file))
+
+# Extract overall line coverage
+line_percent = doc.css('.covered_percent span').first&.text&.strip
+total_lines = doc.css('.t-line-summary b').first&.text&.strip
+covered_lines = doc.css('.t-line-summary .green b').first&.text&.strip
+missed_lines = doc.css('.t-line-summary .red b').first&.text&.strip
+
+# Extract overall branch coverage (first t-branch-summary is the overall stats)
+overall_branch_summary = doc.css('.t-branch-summary').first
+if overall_branch_summary
+  branch_percent = overall_branch_summary.css('span').last.text.strip.gsub(/[()]/, '')
+  branch_summary_spans = overall_branch_summary.css('span b')
+  total_branches = branch_summary_spans[0]&.text&.strip
+  covered_branches = branch_summary_spans[1]&.text&.strip
+  missed_branches = branch_summary_spans[2]&.text&.strip
+else
+  # No branch coverage available
+  branch_percent = nil
+  total_branches = nil
+  covered_branches = nil
+  missed_branches = nil
+end
+
+# Extract timestamp
+timestamp = doc.css('.timestamp .timeago').first&.attr('title')
+
+puts '## 📊 SimpleCov Coverage Report'
+puts "Generated: #{timestamp}"
+puts ''
+
+puts "### 📈 Line Coverage: #{line_percent}"
+puts "  ✅ #{covered_lines}/#{total_lines} lines covered"
+puts "  ❌ #{missed_lines} lines missed"
+puts ''
+
+if branch_percent
+  puts "### 🌳 Branch Coverage: #{branch_percent}"
+  puts "  ✅ #{covered_branches}/#{total_branches} branches covered"
+  puts "  ❌ #{missed_branches} branches missed"
+  puts ''
+end
+
+# Show file-by-file breakdown if there are missed lines or branches
+if missed_lines.to_i.positive? || missed_branches&.to_i&.positive?
+  puts '### 📋 Files with missing coverage:'
+  puts ''
+
+  files_shown = Set.new
+  # rubocop:disable Metrics/BlockLength
+  doc.css('tbody .t-file').each do |row|
+    file_name = row.css('.t-file__name a').first&.text&.strip
+    line_coverage = row.css('.t-file__coverage').first&.text&.strip
+    branch_coverage = row.css('.t-file__branch-coverage').first&.text&.strip
+    file_link = row.css('.t-file__name a').first&.attr('href')
+
+    # Only show files that aren't 100% covered and haven't been shown yet
+    should_skip = files_shown.include?(file_name) ||
+                  (line_coverage == '100.00 %' && (!branch_coverage || branch_coverage == '100.00 %'))
+    next if should_skip
+
+    files_shown.add(file_name)
+
+    # Extract detailed line information for this file
+    missed_lines = []
+    missed_branches = []
+    total_file_lines = 0
+    covered_file_lines = 0
+
+    if file_link
+      file_id = file_link.gsub('#', '')
+      file_section = doc.css("##{file_id}")
+
+      if file_section.any?
+        # Get the actual counts from SimpleCov's summary
+        line_summary = file_section.css('.t-line-summary')
+        if line_summary.any? # rubocop:disable Metrics/BlockNesting
+          summary_text = line_summary.text
+          # Extract numbers from text like "13 relevant lines. 12 lines covered and 1 lines missed."
+          total_file_lines = Regexp.last_match(1).to_i if summary_text.match(/(\d+)\s+relevant\s+lines/) # rubocop:disable Metrics/BlockNesting
+          covered_file_lines = Regexp.last_match(1).to_i if summary_text.match(/(\d+)\s+lines\s+covered/) # rubocop:disable Metrics/BlockNesting
+        end
+
+        # Find missed lines and branches
+        file_section.css('li').each do |line_item|
+          line_number = line_item.attr('data-linenumber')
+          line_class = line_item.attr('class')
+
+          if line_class&.include?('missed') && !line_class.include?('missed-branch') # rubocop:disable Metrics/BlockNesting
+            missed_lines << line_number
+          elsif line_class&.include?('missed-branch') # rubocop:disable Metrics/BlockNesting
+            missed_branches << line_number
+          end
+        end
+      end
+    end
+
+    # Format the line ranges more clearly
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def format_line_ranges(lines)
+      return '' if lines.empty?
+
+      ranges = []
+      current_range = [lines.first.to_i]
+
+      lines.map(&:to_i).sort[1..]&.each do |line|
+        if line == current_range.last + 1
+          current_range << line
+        else
+          ranges << format_range(current_range)
+          current_range = [line]
+        end
+      end
+      ranges << format_range(current_range)
+
+      "L#{ranges.join(', L')}"
+    end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+    def format_range(range)
+      if range.length == 1
+        range.first.to_s
+      else
+        "#{range.first}-#{range.last}"
+      end
+    end
+
+    files_shown.add(file_name)
+
+    # Get branch counts from the file section
+    covered_branches = 0
+    total_branches = 0
+
+    if file_link
+      file_id = file_link.gsub('#', '')
+      file_section = doc.css("##{file_id}")
+      branch_summary = file_section.css('.t-branch-summary')
+
+      if branch_summary.any?
+        branch_spans = branch_summary.css('span b')
+        total_branches = branch_spans[0]&.text.to_i
+        covered_branches = branch_spans[1]&.text.to_i
+      end
+    end
+
+    branch_display = branch_coverage ? "Branch: #{branch_coverage}" : 'Branch: N/A'
+    puts "  #{file_name} (Line: #{line_coverage}, #{branch_display}):"
+
+    line_info = "📍 Lines: #{covered_file_lines}/#{total_file_lines}"
+    line_info += " (missed: #{format_line_ranges(missed_lines)})" unless missed_lines.empty?
+    puts "         #{line_info}"
+
+    if total_branches.positive?
+      branch_info = "🌿 Branches: #{covered_branches}/#{total_branches}"
+      branch_info += " (missed: #{format_line_ranges(missed_branches)})" unless missed_branches.empty?
+      puts "         #{branch_info}"
+    end
+
+    puts ''
+  end
+  # rubocop:enable Metrics/BlockLength
+end

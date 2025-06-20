@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# frozen_string_literal: true
+
+set -e
+
+# Check if --fix flag is passed
+if [ "$1" = "--fix" ]; then
+  echo "🔧 Running fixes..."
+  echo
+
+  echo "📝 Fixing file formatting..."
+  npx eclint fix 'app/**/*' 'config/**/*' 'lib/**/*' 'test/**/*' 'bin/*' 'Gemfile*' 'Rakefile' '*.rb' '*.yml' '*.yaml' '*.js' '*.css' '*.html' '*.erb' '*.md'
+  echo "✅ eclint fix completed"
+  echo
+
+  echo "🔍 Auto-fixing rubocop violations..."
+  rubocop -A
+  echo "✅ rubocop auto-fix completed"
+  echo
+
+  echo "🎉 All fixes applied! Continuing with CI pipeline..."
+  echo
+fi
+
+echo "🚀 Running CI pipeline..."
+echo
+
+echo "📝 Running eclint check..."
+npx eclint check 'app/**/*' 'config/**/*' 'lib/**/*' 'test/**/*' 'bin/*' 'Gemfile*' 'Rakefile' '*.rb' '*.yml' '*.yaml' '*.js' '*.css' '*.html' '*.erb' '*.md'
+echo "✅ eclint check passed"
+echo
+
+echo "🔍 Running rubocop..."
+rubocop
+echo "✅ rubocop passed"
+echo
+
+echo "🛡️  Running brakeman security scan..."
+brakeman --no-pager --quiet
+echo "✅ brakeman security scan passed"
+echo
+
+echo "🧪 Running tests..."
+rails test
+echo "✅ tests passed"
+echo
+
+echo "🧪 Running system tests..."
+rails test:system
+echo "✅ system tests passed"
+echo
+
+echo "📊 Generating coverage report..."
+if bin/coverage 2>/dev/null; then
+  echo "✅ coverage report generated"
+else
+  echo "ℹ️  coverage report skipped (no coverage data found)"
+fi
+echo
+
+echo "🎉 All CI checks passed!"
