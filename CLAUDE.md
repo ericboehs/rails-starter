@@ -75,6 +75,52 @@ The application uses separate SQLite databases:
 - `eclint` for EditorConfig enforcement
 - Pre-commit hooks ensure code quality
 
+### Commit Messages
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**Types:**
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation only changes
+- `style:` Code style changes (formatting, missing semi-colons, etc)
+- `refactor:` Code change that neither fixes a bug nor adds a feature
+- `perf:` Performance improvements
+- `test:` Adding missing tests or correcting existing tests
+- `build:` Changes that affect the build system or external dependencies
+- `ci:` Changes to CI configuration files and scripts
+- `chore:` Other changes that don't modify src or test files
+
+**Examples:**
+```bash
+git commit -m "feat: add GitHub team member validation"
+git commit -m "fix: handle API rate limiting in team fetcher"
+git commit -m "docs: update setup instructions in README"
+git commit -m "refactor: extract team analysis logic to service"
+```
+
+### Code Coverage
+
+The project enforces comprehensive test coverage using SimpleCov:
+- **Minimum coverage**: 95% overall
+- **Per-file minimum**: 80%
+- **Branch coverage**: Enabled
+- **Coverage reports**: Generated in `coverage/` directory
+- **CI integration**: Coverage reports generated automatically with tests
+
+Coverage configuration in `test/test_helper.rb`:
+- Excludes test files, config, vendor, and database files
+- Groups results by component type (Controllers, Models, Services, etc.)
+- Fails CI if coverage drops below thresholds
+
 ## Development Workflow
 
 1. **Setup**: Run `bin/setup` for initial configuration
@@ -83,4 +129,4 @@ The application uses separate SQLite databases:
 4. **Testing**: Use `bin/rails test` and `bin/rails test:system` for targeted testing
 5. **Coverage**: Check `bin/coverage` for detailed test coverage analysis
 
-The application emphasizes code quality with automated formatting, comprehensive testing, and security scanning integrated into the development workflow.
+The application emphasizes code quality with automated formatting, comprehensive testing, security scanning, and 95% code coverage requirement integrated into the development workflow.
