@@ -2,7 +2,7 @@ en:
   auth:
     sign_in:
       title: "Sign in to your account"
-      subtitle: "Welcome back to GitHub Team Auditor"
+      subtitle: "Welcome back to RailsStarter"
       email_label: "Email address"
       password_label: "Password"
       submit_button: "Sign in"
@@ -12,7 +12,7 @@ en:
       sign_up_link: "Sign up"
     sign_up:
       title: "Create your account"
-      subtitle: "Set up your GitHub Team Auditor access"
+      subtitle: "Set up your RailsStarter access"
       email_label: "Email address"
       password_label: "Password"
       password_confirmation_label: "Confirm password"

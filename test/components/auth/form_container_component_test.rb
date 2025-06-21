@@ -28,7 +28,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     component = Auth::FormContainerComponent.new(title_key: "auth.sign_in.title")
     render_inline(component) { "Form content" }
 
-    assert_selector "img[alt='GitHub Team Auditor']"
+    assert_selector "img[alt='RailsStarter']"
   end
 
   def test_renders_with_title_key_only
@@ -47,7 +47,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     render_inline(component) { "Form content" }
 
     assert_selector "h2", text: "Sign in to your account"
-    assert_selector "p", text: "Welcome back to GitHub Team Auditor"
+    assert_selector "p", text: "Welcome back to RailsStarter"
   end
 
   def test_renders_with_nil_title_key

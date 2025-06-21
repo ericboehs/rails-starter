@@ -29,8 +29,8 @@
 
 en:
   app:
-    title: "GitHub Team Auditor"
-    logo_alt: "GitHub Team Auditor"
+    title: "RailsStarter"
+    logo_alt: "RailsStarter"
 
   navigation:
     dashboard: "Dashboard"
@@ -42,9 +42,9 @@ en:
       sign_out: "Sign out"
 
   dashboard:
-    welcome_title: "Welcome to GitHub Team Auditor"
+    welcome_title: "Welcome to RailsStarter"
     section_title: "Dashboard"
-    welcome_message: "Welcome to GitHub Team Auditor! Team auditing features will be available here soon."
+    welcome_message: "Welcome to RailsStarter! Features will be available here soon."
 
   users:
     show:

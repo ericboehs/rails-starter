@@ -1,6 +1,6 @@
-# GitHub Team Auditor
+# Rails Starter Template
 
-A Rails 8.0.2 application for auditing GitHub teams.
+A Rails 8.0.2 application template with modern tooling and best practices.
 
 ## Features
 
@@ -28,20 +28,35 @@ A Rails 8.0.2 application for auditing GitHub teams.
 - Rails 8.0.2+
 - SQLite3
 
-### Installation
+### Using This Template
 
-1. Clone the repository
-2. Install dependencies:
+1. Click "Use this template" button on GitHub to create a new repository
+2. Clone your new repository
+3. Install dependencies:
   ```bash
   bin/setup
   ```
 
-3. Start the development server:
+4. Rename the application (this also regenerates credentials for security):
+  ```bash
+  bin/rename-app YourAppName
+  ```
+
+5. Set up your credentials:
+  ```bash
+  bin/rails credentials:edit
+  ```
+
+6. Customize for your project:
+  - Update `CLAUDE.md` with your project details
+  - Modify this README.md
+
+7. Start the development server:
   ```bash
   bin/rails server
   ```
 
-4. Visit `http://localhost:3000`
+8. Visit `http://localhost:3000`
 
 ## Development
 

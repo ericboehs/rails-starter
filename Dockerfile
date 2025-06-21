@@ -2,8 +2,8 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t github_team_auditor .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name github_team_auditor github_team_auditor
+# docker build -t rails_starter .
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name rails_starter rails_starter
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 

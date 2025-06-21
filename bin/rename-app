@@ -1,0 +1,99 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+def usage
+  puts <<~USAGE
+    Usage: bin/rename-app <new_name>
+
+    Renames the Rails application from 'RailsStarter' to the specified name.
+    The name should be in PascalCase (e.g., MyAwesomeApp).
+
+    Example:
+      bin/rename-app MyAwesomeApp
+  USAGE
+  exit 1
+end
+
+def snake_case(name)
+  name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+      .downcase
+end
+
+def validate_name(name)
+  unless name.match?(/\A[A-Z][a-zA-Z0-9]*\z/)
+    puts "Error: Name must be in PascalCase and contain only letters and numbers"
+    puts "Examples: MyApp, MyAwesomeApp, MyApp123"
+    exit 1
+  end
+end
+
+def replace_in_file(file_path, old_name, new_name)
+  return unless File.exist?(file_path)
+
+  content = File.read(file_path)
+  updated_content = content.gsub(old_name, new_name)
+
+  if content != updated_content
+    File.write(file_path, updated_content)
+    puts "Updated: #{file_path}"
+  end
+end
+
+def main
+  new_name = ARGV[0]
+
+  usage if new_name.nil? || new_name.empty?
+  validate_name(new_name)
+
+  old_name = "RailsStarter"
+  old_snake = snake_case(old_name)
+  new_snake = snake_case(new_name)
+
+  puts "Renaming application from '#{old_name}' to '#{new_name}'..."
+
+  # Files to update
+  files_to_update = [
+    'config/application.rb',
+    'app/views/pwa/manifest.json.erb',
+    'config/locales/en.yml',
+    'config/locales/auth.en.yml',
+    'docs/testing.md',
+    'docs/authentication.md',
+    'test/controllers/dashboard_controller_test.rb',
+    'test/components/auth/form_container_component_test.rb',
+    'PRD.md',
+    'Dockerfile',
+    'config/deploy.yml'
+  ]
+
+  # Replace module name
+  files_to_update.each do |file|
+    replace_in_file(file, old_name, new_name)
+  end
+
+  files_to_update.each do |file|
+    replace_in_file(file, "Rails Starter", new_name)
+  end
+
+  files_to_update.each do |file|
+    replace_in_file(file, "rails_starter", new_snake)
+  end
+
+  # Replace snake_case references if any exist
+  files_to_update.each do |file|
+    replace_in_file(file, old_snake, new_snake)
+  end
+
+  puts
+  puts "✅ Application successfully renamed to '#{new_name}'"
+  puts
+  puts "Next steps:"
+  puts "1. Update your README.md with the new application name"
+  puts "2. Update CLAUDE.md if it references the old name"
+  puts "3. Consider updating your git remote if the repository name changed"
+  puts "4. Run: bin/rails db:drop db:create db:migrate db:seed"
+end
+
+main if __FILE__ == $0

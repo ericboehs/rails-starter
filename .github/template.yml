@@ -1,0 +1,13 @@
+name: Rails Starter Template
+description: 'A Rails 8.0.2 application template with modern tooling and best practices'
+titlePlaceholder: 'my-rails-app'
+shortDescription: 'Rails 8.0.2 starter with authentication, testing, and modern tooling'
+tags:
+  - rails
+  - ruby
+  - template
+  - starter
+  - authentication
+  - testing
+  - tailwind
+  - sqlite

@@ -1,6 +1,6 @@
 # Testing Guide
 
-This document outlines the testing strategy and best practices for the GitHub Team Auditor application.
+This document outlines the testing strategy and best practices for the RailsStarter application.
 
 ## Overview
 
@@ -223,7 +223,7 @@ class AuthenticationTest < ApplicationSystemTestCase
     click_button "Sign in"
 
     assert_current_path root_path
-    assert_text "Welcome to GitHub Team Auditor"
+    assert_text "Welcome to RailsStarter"
   end
 
   test "user sees error with invalid credentials" do
