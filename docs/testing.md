@@ -59,12 +59,33 @@ Run the full CI pipeline including tests:
 # Full CI pipeline
 bin/ci
 
+# Auto-fix style violations before running CI
+bin/ci --fix
+
 # Watch CI status in real-time
 bin/watch-ci
 
 # Generate detailed coverage report
 bin/coverage
 ```
+
+The CI pipeline (defined in `config/ci.rb`) runs:
+- **Setup**: Database preparation and dependency check
+- **Style checks**: EditorConfig, ERB linting (herb-tools), RuboCop
+- **Security**: Importmap audit, Brakeman code analysis
+- **Tests**: Rails tests, System tests, Seeds replant
+- **Coverage**: SimpleCov report generation
+
+### Accessibility Testing
+
+The application includes automated accessibility testing using axe-core to ensure WCAG 2.1 AA compliance. Accessibility tests are part of the system test suite:
+
+```bash
+# Run accessibility tests
+bin/rails test:system test/system/accessibility_test.rb
+```
+
+For detailed information on writing accessibility tests and understanding violations, see [docs/accessibility.md](accessibility.md).
 
 ## Test Configuration
 
