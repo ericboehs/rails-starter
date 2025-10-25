@@ -37,8 +37,8 @@ class AuthenticationTest < ApplicationSystemTestCase
     # Submit the form
     click_button "Sign in"
 
-    # Should show error message (wait for Turbo to complete)
-    assert_text "Invalid email or password"
+    # Wait for error alert to appear (Turbo submission complete)
+    assert_selector ".bg-red-50", text: "Invalid email or password"
     # Should remain on sign-in page with error
     assert_current_path new_session_path
   end
@@ -50,6 +50,7 @@ class AuthenticationTest < ApplicationSystemTestCase
     click_link "Forgot password?"
 
     # Should be on password reset page
+    assert_text "Forgot your password?"
     assert_current_path new_password_path
   end
 
