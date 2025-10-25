@@ -11,7 +11,7 @@ CI.run do
   end
 
   step "Style: EditorConfig", "npx eclint check 'app/**/*' 'config/**/*' 'lib/**/*' 'test/**/*' 'bin/*' 'Gemfile*' 'Rakefile' '*.rb' '*.yml' '*.yaml' '*.js' '*.css' '*.html' '*.erb' '*.md'"
-  step "Style: ERB", "npx @herb-tools/linter"
+  step "Style: ERB", "npx @herb-tools/linter 'app/**/*.erb'"
   step "Style: Ruby", "bin/rubocop"
   step "Security: Importmap vulnerability audit", "bin/importmap audit"
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
