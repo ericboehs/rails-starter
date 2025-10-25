@@ -37,9 +37,10 @@ class AuthenticationTest < ApplicationSystemTestCase
     # Submit the form
     click_button "Sign in"
 
+    # Should show error message (wait for Turbo to complete)
+    assert_text "Invalid email or password"
     # Should remain on sign-in page with error
     assert_current_path new_session_path
-    assert_text "Invalid email or password"
   end
 
   test "user can access forgot password" do
