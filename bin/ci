@@ -14,7 +14,7 @@ if [ "$1" = "--fix" ]; then
   echo
 
   echo "🔍 Auto-fixing rubocop violations..."
-  rubocop -A
+  bin/rubocop -A
   echo "✅ rubocop auto-fix completed"
   echo
 
@@ -31,12 +31,12 @@ echo "✅ eclint check passed"
 echo
 
 echo "🔍 Running rubocop..."
-rubocop
+bin/rubocop
 echo "✅ rubocop passed"
 echo
 
 echo "🛡️  Running brakeman security scan..."
-brakeman --no-pager --quiet
+bin/brakeman --no-pager --quiet
 echo "✅ brakeman security scan passed"
 echo
 
