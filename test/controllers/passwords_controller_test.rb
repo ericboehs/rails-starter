@@ -11,7 +11,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_password_url
     assert_response :success
-    assert_select "h2", "Forgot your password?"
+    assert_select "h1", "Forgot your password?"
   end
 
   test "should create password reset request with valid email" do
@@ -36,7 +36,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     token = @user.signed_id(purpose: :password_reset, expires_in: 20.minutes)
     get edit_password_url(token: token)
     assert_response :success
-    assert_select "h2", "Reset your password"
+    assert_select "h1", "Reset your password"
   end
 
   test "should update password with valid params" do

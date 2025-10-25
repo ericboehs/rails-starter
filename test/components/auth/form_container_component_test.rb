@@ -7,7 +7,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     component = Auth::FormContainerComponent.new(title_key: "auth.sign_in.title")
     render_inline(component) { "Form content" }
 
-    assert_selector "h2", text: "Sign in to your account"
+    assert_selector "h1", text: "Sign in to your account"
     assert_text "Form content"
     assert_selector ".flex.min-h-full.flex-col"
   end
@@ -20,7 +20,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     )
     render_inline(component) { "Form content" }
 
-    assert_selector "h2", text: "Custom Title"
+    assert_selector "h1", text: "Custom Title"
     assert_selector "p", text: "Custom Subtitle"
   end
 
@@ -35,7 +35,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     component = Auth::FormContainerComponent.new(title_key: "auth.sign_up.title")
     render_inline(component) { "Form content" }
 
-    assert_selector "h2", text: "Create your account"
+    assert_selector "h1", text: "Create your account"
     assert_text "Form content"
   end
 
@@ -46,7 +46,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     )
     render_inline(component) { "Form content" }
 
-    assert_selector "h2", text: "Sign in to your account"
+    assert_selector "h1", text: "Sign in to your account"
     assert_selector "p", text: "Welcome back to RailsStarter"
   end
 
@@ -57,7 +57,7 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
     )
     render_inline(component) { "Form content" }
 
-    assert_selector "h2", text: "Custom Title"
+    assert_selector "h1", text: "Custom Title"
     assert_text "Form content"
   end
 end

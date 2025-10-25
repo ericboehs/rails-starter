@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Rails 8.0.2 application called **GitHub Team Auditor** (`GithubTeamAuditor` module) built for auditing GitHub teams. The application uses modern Rails features including Solid libraries (Cache, Queue, Cable) and is configured for deployment with Kamal.
+This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAuditor` module) built for auditing GitHub teams. The application uses modern Rails features including Solid libraries (Cache, Queue, Cable) and is configured for deployment with Kamal.
 
 ## Development Commands
 
@@ -30,7 +30,8 @@ This is a Rails 8.0.2 application called **GitHub Team Auditor** (`GithubTeamAud
 ## Architecture & Configuration
 
 ### Modern Rails Stack
-- **Rails 8.0.2** with modern asset pipeline (Propshaft)
+- **Rails 8.1.0** with modern asset pipeline (Propshaft)
+- **Ruby 3.4.7**
 - **SQLite3** for all environments including production
 - **ImportMap** for JavaScript (no Node.js bundling)
 - **Hotwire** (Turbo + Stimulus) for interactivity
@@ -52,8 +53,11 @@ The application uses separate SQLite databases:
 ### Testing Setup
 - **Minitest** (Rails default) for unit and integration tests
 - **Capybara + Selenium** for system tests
+- **Axe-core** for automated accessibility testing (WCAG 2.1 AA)
 - **SimpleCov** for coverage analysis with branch coverage tracking
 - Pre-commit hooks run full CI pipeline to ensure quality
+
+See `docs/accessibility.md` for detailed accessibility testing guide.
 
 ## Key Files & Directories
 

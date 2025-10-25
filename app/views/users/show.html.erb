@@ -3,7 +3,7 @@
     <%= render AvatarComponent.new(user: @user, size: 20, text_size: "2xl") %>
 
     <div>
-      <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white"><%= @user.email_address %></h3>
+      <h2 class="text-lg font-medium leading-6 text-gray-900 dark:text-white"><%= @user.email_address %></h2>
       <p class="text-sm text-gray-500 dark:text-gray-400"><%= t('users.show.member_since', date: @user.created_at.strftime("%B %Y")) %></p>
     </div>
 

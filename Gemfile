@@ -69,6 +69,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 
+  # Accessibility testing with axe-core [https://github.com/dequelabs/axe-core-gems]
+  gem "axe-core-capybara"
+
   # Code coverage tracking
   gem "simplecov", require: false
 end

@@ -11,7 +11,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_session_url
     assert_response :success
-    assert_select "h2", "Sign in to your account"
+    assert_select "h1", "Sign in to your account"
   end
 
   test "should create session with valid credentials" do
