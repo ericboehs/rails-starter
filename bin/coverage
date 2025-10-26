@@ -65,23 +65,40 @@ end
 
 # Show file-by-file breakdown if there are missed lines or branches
 if missed_lines.to_i.positive? || missed_branches&.to_i&.positive?
-  puts '### 📋 Files with missing coverage:'
-  puts ''
-
+  # First, collect all files with missing coverage
+  files_with_issues = []
   files_shown = Set.new
-  # rubocop:disable Metrics/BlockLength
+
   doc.css('tbody .t-file').each do |row|
     file_name = row.css('.t-file__name a').first&.text&.strip
     line_coverage = row.css('.t-file__coverage').first&.text&.strip
     branch_coverage = row.css('.t-file__branch-coverage').first&.text&.strip
-    file_link = row.css('.t-file__name a').first&.attr('href')
 
-    # Only show files that aren't 100% covered and haven't been shown yet
+    # Only include files that aren't 100% covered and haven't been seen yet
     should_skip = files_shown.include?(file_name) ||
                   (line_coverage == '100.00 %' && (!branch_coverage || branch_coverage == '100.00 %'))
     next if should_skip
 
     files_shown.add(file_name)
+    files_with_issues << row
+  end
+
+  total_files_with_issues = files_with_issues.length
+  files_to_show = files_with_issues.take(50)
+
+  puts '### 📋 Files with missing coverage:'
+  puts ''
+  if total_files_with_issues > 50
+    puts "Showing top 50 of #{total_files_with_issues} files with missing coverage:"
+    puts ''
+  end
+
+  # rubocop:disable Metrics/BlockLength
+  files_to_show.each do |row|
+    file_name = row.css('.t-file__name a').first&.text&.strip
+    line_coverage = row.css('.t-file__coverage').first&.text&.strip
+    branch_coverage = row.css('.t-file__branch-coverage').first&.text&.strip
+    file_link = row.css('.t-file__name a').first&.attr('href')
 
     # Extract detailed line information for this file
     missed_lines = []
@@ -147,8 +164,6 @@ if missed_lines.to_i.positive? || missed_branches&.to_i&.positive?
       end
     end
 
-    files_shown.add(file_name)
-
     # Get branch counts from the file section
     covered_branches = 0
     total_branches = 0
@@ -181,4 +196,32 @@ if missed_lines.to_i.positive? || missed_branches&.to_i&.positive?
     puts ''
   end
   # rubocop:enable Metrics/BlockLength
+end
+
+# Write to GitHub Actions job summary if available
+if ENV['GITHUB_STEP_SUMMARY']
+  File.open(ENV['GITHUB_STEP_SUMMARY'], 'a') do |f|
+    f.puts ''
+    f.puts '## 📊 Test Coverage Report'
+    f.puts ''
+    f.puts "**Line Coverage:** #{line_percent} (#{covered_lines}/#{total_lines} lines)"
+    f.puts ''
+
+    if branch_percent
+      f.puts "**Branch Coverage:** #{branch_percent} (#{covered_branches}/#{total_branches} branches)"
+      f.puts ''
+    end
+
+    # Add visual indicators
+    line_pct_value = line_percent.gsub('%', '').to_f
+    branch_pct_value = branch_percent&.gsub('%', '')&.to_f
+
+    if line_pct_value >= 95 && (!branch_pct_value || branch_pct_value >= 95)
+      f.puts '✅ Coverage meets quality thresholds'
+    elsif line_pct_value >= 80 && (!branch_pct_value || branch_pct_value >= 80)
+      f.puts '⚠️ Coverage is acceptable but could be improved'
+    else
+      f.puts '❌ Coverage is below recommended thresholds'
+    end
+  end
 end
