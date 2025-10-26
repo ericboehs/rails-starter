@@ -1,3 +1,4 @@
+# Renders a user avatar image from Gravatar with fallback to initials
 class AvatarComponent < ViewComponent::Base
   def initialize(user:, size: 8, text_size: "sm")
     @user = user

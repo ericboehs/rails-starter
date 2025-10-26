@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Renders a styled link with button appearance for authentication flows
 class Auth::LinkButtonComponent < ViewComponent::Base
   include ButtonStyling
 
@@ -16,6 +17,6 @@ class Auth::LinkButtonComponent < ViewComponent::Base
 
   def button_classes
     extra_classes = options.delete(:class) || ""
-    build_button_classes(variant: variant, extra_classes: extra_classes, include_flex: true)
+    build_flex_button_classes(variant: variant, extra_classes: extra_classes)
   end
 end

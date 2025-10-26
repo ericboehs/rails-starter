@@ -1,5 +1,7 @@
 require "test_helper"
 
+# session1/session2 in these DSL-style tests trigger Reek despite being clear.
+# :reek:UncommunicativeVariableName { enabled: false }
 class UserTest < ActiveSupport::TestCase
   setup do
     @user = User.create!(

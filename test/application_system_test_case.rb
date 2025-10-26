@@ -4,6 +4,7 @@ require "axe/matchers/be_axe_clean"
 # Silence Puma server output during system tests
 Capybara.server = :puma, { Silent: true }
 
+# Base class for system tests with Capybara and accessibility testing setup
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :headless_chrome, screen_size: [ 1400, 1400 ]
 

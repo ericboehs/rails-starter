@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :reek:InstanceVariableAssumption - @user set in actions for views
 class UsersController < ApplicationController
   skip_before_action :require_authentication, only: [ :new, :create ]
 

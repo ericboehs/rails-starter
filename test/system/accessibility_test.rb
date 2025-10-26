@@ -1,5 +1,6 @@
 require "application_system_test_case"
 
+# Tests application accessibility compliance with WCAG 2.1 AA standards
 class AccessibilityTest < ApplicationSystemTestCase
   setup do
     @user = User.create!(

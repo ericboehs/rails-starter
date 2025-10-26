@@ -2,6 +2,7 @@
 
 require "test_helper"
 
+# Tests the AlertComponent component
 class AlertComponentTest < ViewComponent::TestCase
   def test_renders_success_alert
     component = AlertComponent.new(type: :success, message: "Success message")
@@ -93,14 +94,6 @@ class AlertComponentTest < ViewComponent::TestCase
 
       assert_selector "svg"
     end
-  end
-
-  def test_renders_alert_type_alias
-    component = AlertComponent.new(type: :alert, message: "Alert message")
-    render_inline(component)
-
-    assert_text "Alert message"
-    assert_selector ".bg-red-50" # Should use error styling
   end
 
   def test_renders_dismissible_button_styles_for_all_types

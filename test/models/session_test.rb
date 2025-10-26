@@ -1,5 +1,6 @@
 require "test_helper"
 
+# Tests the Session model
 class SessionTest < ActiveSupport::TestCase
   test "should belong to user" do
     user = User.create!(

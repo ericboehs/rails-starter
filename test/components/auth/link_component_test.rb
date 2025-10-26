@@ -2,6 +2,7 @@
 
 require "test_helper"
 
+# Tests the Auth::LinkComponent component
 class Auth::LinkComponentTest < ViewComponent::TestCase
   def test_renders_link_with_url
     component = Auth::LinkComponent.new(

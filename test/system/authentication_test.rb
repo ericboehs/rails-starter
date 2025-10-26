@@ -1,5 +1,6 @@
 require "application_system_test_case"
 
+# Tests authentication system functionality
 class AuthenticationTest < ApplicationSystemTestCase
   setup do
     @user = User.create!(

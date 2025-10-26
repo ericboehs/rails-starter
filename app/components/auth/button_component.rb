@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Renders a styled submit button for authentication forms
 class Auth::ButtonComponent < ViewComponent::Base
   include ButtonStyling
 

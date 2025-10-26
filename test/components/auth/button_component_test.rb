@@ -2,6 +2,7 @@
 
 require "test_helper"
 
+# Tests the Auth::ButtonComponent component
 class Auth::ButtonComponentTest < ViewComponent::TestCase
   def test_renders_primary_button
     component = Auth::ButtonComponent.new(text: "Sign In", type: :submit, variant: :primary)

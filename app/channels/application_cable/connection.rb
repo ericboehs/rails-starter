@@ -1,4 +1,6 @@
+# Base class for all Action Cable connections
 module ApplicationCable
+  # Establishes WebSocket connections authenticated via session cookies
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
 

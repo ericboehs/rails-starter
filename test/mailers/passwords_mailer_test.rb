@@ -1,5 +1,6 @@
 require "test_helper"
 
+# Tests the PasswordsMailer mailer
 class PasswordsMailerTest < ActionMailer::TestCase
   setup do
     @user = User.create!(

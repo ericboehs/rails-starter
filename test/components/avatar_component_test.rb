@@ -1,5 +1,6 @@
 require "test_helper"
 
+# Tests the AvatarComponent component
 class AvatarComponentTest < ViewComponent::TestCase
   test "renders avatar with default size" do
     user = User.create!(email_address: "test@example.com", password: "password123")

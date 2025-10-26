@@ -1,5 +1,6 @@
 require "test_helper"
 
+# Tests the UsersController controller
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = User.create!(

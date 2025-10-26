@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Wraps authentication forms with consistent title and subtitle styling
 class Auth::FormContainerComponent < ViewComponent::Base
   def initialize(title_key:, subtitle_key: nil, title: nil, subtitle: nil)
     @title_key = title_key

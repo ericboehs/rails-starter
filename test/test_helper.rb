@@ -57,6 +57,7 @@ Prosopite.rails_logger = true
 Prosopite.raise = true
 
 module ActiveSupport
+  # Base class for all tests with parallel execution and coverage tracking
   class TestCase
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors)

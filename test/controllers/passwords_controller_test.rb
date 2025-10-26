@@ -1,5 +1,6 @@
 require "test_helper"
 
+# Tests the PasswordsController controller
 class PasswordsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = User.create!(

@@ -1,3 +1,4 @@
+# Provides session-based authentication behavior for controllers
 module Authentication
   extend ActiveSupport::Concern
 
