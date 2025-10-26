@@ -51,6 +51,11 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+# Prosopite N+1 query detection
+require "prosopite"
+Prosopite.rails_logger = true
+Prosopite.raise = true
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
@@ -67,6 +72,15 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
+
+    # Enable Prosopite N+1 detection for each test
+    setup do
+      Prosopite.scan
+    end
+
+    teardown do
+      Prosopite.finish
+    end
 
     # Add more helper methods to be used by all tests here...
   end

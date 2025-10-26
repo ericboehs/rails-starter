@@ -49,8 +49,14 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  # Check for vulnerable versions of gems [https://github.com/rubysec/bundler-audit]
+  gem "bundler-audit", require: false
+
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Code smell detection [https://github.com/troessner/reek]
+  gem "reek", require: false
 end
 
 # A framework for building reusable, testable & encapsulated view components
@@ -71,6 +77,9 @@ group :test do
 
   # Accessibility testing with axe-core [https://github.com/dequelabs/axe-core-gems]
   gem "axe-core-capybara"
+
+  # N+1 query detection [https://github.com/charkost/prosopite]
+  gem "prosopite"
 
   # Code coverage tracking
   gem "simplecov", require: false

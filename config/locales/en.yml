@@ -1,79 +1,45 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
+---
 en:
-  app:
-    title: "RailsStarter"
-    logo_alt: "RailsStarter"
-
-  navigation:
-    dashboard: "Dashboard"
-    mobile_menu:
-      open: "Open main menu"
-    user_menu:
-      open: "Open user menu"
-      profile: "Your Profile"
-      sign_out: "Sign out"
-
-  dashboard:
-    welcome_title: "Welcome to RailsStarter"
-    section_title: "Dashboard"
-    welcome_message: "Welcome to RailsStarter! Features will be available here soon."
-
-  users:
-    show:
-      title: "Your Profile"
-      member_since: "Member since %{date}"
-      edit_button: "Edit Profile"
-    edit:
-      title: "Edit Profile"
-    form:
-      email_label: "Email address"
-      password_label: "Password"
-      password_confirmation_label: "Password confirmation"
-      password_help: "Leave blank to keep current password"
-      update_button: "Update Profile"
-    avatar:
-      gravatar_description: "Avatar from Gravatar"
-
-  buttons:
-    cancel: "Cancel"
-
-  errors:
-    form_submission_errors: "There were errors with your submission"
-
   alerts:
-    validation_errors_header: "Please correct the following errors:"
-    dismiss: "Dismiss"
-
+    dismiss: Dismiss
+    validation_errors_header: 'Please correct the following errors:'
+  app:
+    logo_alt: RailsStarter
+    title: RailsStarter
+  buttons:
+    cancel: Cancel
+  dashboard:
+    section_title: Dashboard
+    welcome_message: Welcome to RailsStarter! Features will be available here soon.
+    welcome_title: Welcome to RailsStarter
+  errors:
+    form_submission_errors: There were errors with your submission
   mailer:
     password_reset:
-      body_html: "You can reset your password within the next 15 minutes on"
-      body_text: "You can reset your password within the next 15 minutes on this password reset page:"
-      reset_link_text: "this password reset page"
+      body_html: You can reset your password within the next 15 minutes on
+      body_text: 'You can reset your password within the next 15 minutes on this password
+        reset page:'
+      reset_link_text: this password reset page
+  navigation:
+    dashboard: Dashboard
+    mobile_menu:
+      open: Open main menu
+    user_menu:
+      open: Open user menu
+      profile: Your Profile
+      sign_out: Sign out
+  users:
+    avatar:
+      gravatar_description: Avatar from Gravatar
+    edit:
+      title: Edit Profile
+    form:
+      email_label: Email address
+      password_confirmation_label: Password confirmation
+      password_help: Leave blank to keep current password
+      password_label: Password
+      update_button: Update Profile
+    show:
+      edit_button: Edit Profile
+      member_since: Member since %{date}
+      title: Your Profile

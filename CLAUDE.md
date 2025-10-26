@@ -23,6 +23,9 @@ This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAud
 ### Individual Quality Tools
 - `rubocop` - Ruby style checking (Rails Omakase style)
 - `rubocop -A` - Auto-fix Ruby style violations
+- `bundle exec reek` - Code smell detection
+- `bin/rails zeitwerk:check` - Verify Rails autoloading
+- `bundle exec bundle-audit check` - Check for vulnerable gem versions
 - `brakeman` - Security vulnerability scanning
 - `npx eclint check` - EditorConfig compliance checking
 - `npx eclint fix` - Auto-fix EditorConfig violations
@@ -47,7 +50,10 @@ The application uses separate SQLite databases:
 ### Code Quality Standards
 - **EditorConfig**: UTF-8, LF line endings, 2-space indentation
 - **RuboCop**: Rails Omakase configuration (DHH's opinionated style)
-- **Brakeman**: Security scanning integrated into CI
+- **Reek**: Code smell detection for maintainability
+- **Zeitwerk**: Autoloading verification for Rails constants
+- **bundler-audit**: Vulnerability scanning for gem dependencies
+- **Brakeman**: Security scanning for Rails-specific vulnerabilities
 - **SimpleCov**: Test coverage with detailed HTML reports
 
 ### Testing Setup
