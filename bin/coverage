@@ -33,15 +33,15 @@ overall_branch_summary = doc.css('.t-branch-summary').first
 if overall_branch_summary
   branch_percent = overall_branch_summary.css('span').last.text.strip.gsub(/[()]/, '')
   branch_summary_spans = overall_branch_summary.css('span b')
-  total_branches = branch_summary_spans[0]&.text&.strip
-  covered_branches = branch_summary_spans[1]&.text&.strip
-  missed_branches = branch_summary_spans[2]&.text&.strip
+  overall_total_branches = branch_summary_spans[0]&.text&.strip
+  overall_covered_branches = branch_summary_spans[1]&.text&.strip
+  overall_missed_branches = branch_summary_spans[2]&.text&.strip
 else
   # No branch coverage available
   branch_percent = nil
-  total_branches = nil
-  covered_branches = nil
-  missed_branches = nil
+  overall_total_branches = nil
+  overall_covered_branches = nil
+  overall_missed_branches = nil
 end
 
 # Extract timestamp
@@ -58,13 +58,13 @@ puts ''
 
 if branch_percent
   puts "### 🌳 Branch Coverage: #{branch_percent}"
-  puts "  ✅ #{covered_branches}/#{total_branches} branches covered"
-  puts "  ❌ #{missed_branches} branches missed"
+  puts "  ✅ #{overall_covered_branches}/#{overall_total_branches} branches covered"
+  puts "  ❌ #{overall_missed_branches} branches missed"
   puts ''
 end
 
 # Show file-by-file breakdown if there are missed lines or branches
-if missed_lines.to_i.positive? || missed_branches&.to_i&.positive?
+if missed_lines.to_i.positive? || overall_missed_branches&.to_i&.positive?
   # First, collect all files with missing coverage
   files_with_issues = []
   files_shown = Set.new
@@ -208,7 +208,7 @@ if ENV['GITHUB_STEP_SUMMARY']
     f.puts ''
 
     if branch_percent
-      f.puts "**Branch Coverage:** #{branch_percent} (#{covered_branches}/#{total_branches} branches)"
+      f.puts "**Branch Coverage:** #{branch_percent} (#{overall_covered_branches}/#{overall_total_branches} branches)"
       f.puts ''
     end
 
