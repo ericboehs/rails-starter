@@ -1,18 +1,18 @@
 # Rails Starter Template
 
-A Rails 8.0.2 application template with modern tooling and best practices.
+A Rails 8.1.0 application template with modern tooling and best practices.
 
 ## Features
 
 - **User Authentication** - Secure session-based authentication system
-- **Modern Rails Stack** - Built with Rails 8.0.2, SQLite3, and modern asset pipeline
+- **Modern Rails Stack** - Built with Rails 8.1.0, SQLite3, and modern asset pipeline
 - **Component-Based UI** - ViewComponent architecture for maintainable UI components
 - **Responsive Design** - Tailwind CSS with dark mode support
 - **Comprehensive Testing** - 99%+ test coverage with SimpleCov
 
 ## Tech Stack
 
-- **Rails 8.0.2** with modern asset pipeline (Propshaft)
+- **Rails 8.1.0** with modern asset pipeline (Propshaft)
 - **SQLite3** for all environments including production
 - **ImportMap** for JavaScript (no Node.js bundling required)
 - **Hotwire** (Turbo + Stimulus) for interactive features
@@ -24,8 +24,8 @@ A Rails 8.0.2 application template with modern tooling and best practices.
 
 ### Prerequisites
 
-- Ruby 3.2+
-- Rails 8.0.2+
+- Ruby 3.4.7
+- Rails 8.1.0+
 - SQLite3
 
 ### Using This Template

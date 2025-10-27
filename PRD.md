@@ -22,8 +22,8 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 - **User Profiles** - Profile management with Gravatar integration and avatar fallbacks
 - **Dashboard Access** - Protected dashboard for authenticated users
 
-### Application Infrastructure  
-- **Modern Rails Stack** - Rails 8.0.2 with Solid libraries (Cache, Queue, Cable)
+### Application Infrastructure
+- **Modern Rails Stack** - Rails 8.1.0 with Solid libraries (Cache, Queue, Cable)
 - **Component Architecture** - ViewComponent-based UI system with reusable components
 - **Responsive Design** - Mobile-friendly interface with Tailwind CSS and dark mode support
 - **Testing Framework** - 99%+ test coverage with SimpleCov and comprehensive CI/CD pipeline
@@ -40,7 +40,7 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 ## Technical Implementation
 
 ### Architecture
-- **Rails 8.0.2** application with modern conventions
+- **Rails 8.1.0** application with modern conventions
 - **SQLite3** multi-database configuration for production simplicity
 - **ViewComponent** architecture for maintainable UI components
 - **Hotwire** (Turbo + Stimulus) for interactive frontend features
@@ -77,8 +77,8 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 ## Dependencies
 
 ### Current Dependencies
-- **Ruby 3.2+** - Application runtime
-- **Rails 8.0.2** - Web framework with Solid libraries
+- **Ruby 3.4.7** - Application runtime
+- **Rails 8.1.0** - Web framework with Solid libraries
 - **SQLite3** - Database for all environments
 - **ViewComponent** - UI component framework
 - **SimpleCov** - Test coverage analysis

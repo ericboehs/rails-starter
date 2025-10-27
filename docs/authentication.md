@@ -4,7 +4,7 @@ This document outlines the authentication system implemented in the RailsStarter
 
 ## Overview
 
-The application uses a session-based authentication system built with Rails 8.0.2, providing secure user management with email/password authentication and password reset functionality.
+The application uses a session-based authentication system built with Rails 8.1.0, providing secure user management with email/password authentication and password reset functionality.
 
 ## Architecture
 
