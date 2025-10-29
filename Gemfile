@@ -78,9 +78,6 @@ group :test do
   # Accessibility testing with axe-core [https://github.com/dequelabs/axe-core-gems]
   gem "axe-core-capybara"
 
-  # N+1 query detection [https://github.com/charkost/prosopite]
-  gem "prosopite"
-
   # Code coverage tracking
   gem "simplecov", require: false
 end

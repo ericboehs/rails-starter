@@ -265,7 +265,6 @@ GEM
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
-    prosopite (2.1.2)
     psych (5.2.6)
       date
       stringio
@@ -471,7 +470,6 @@ DEPENDENCIES
   jbuilder
   kamal
   propshaft
-  prosopite
   puma (>= 5.0)
   rails (~> 8.1.0)
   reek
@@ -490,7 +488,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-  ruby 3.4.7p58
+    ruby 3.4.7p58
 
 BUNDLED WITH
-  2.6.7
+    2.6.7
