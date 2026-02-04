@@ -34,7 +34,7 @@ This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAud
 
 ### Modern Rails Stack
 - **Rails 8.1.0** with modern asset pipeline (Propshaft)
-- **Ruby 3.4.7**
+- **Ruby 4.0.1**
 - **SQLite3** for all environments including production
 - **ImportMap** for JavaScript (no Node.js bundling)
 - **Hotwire** (Turbo + Stimulus) for interactivity

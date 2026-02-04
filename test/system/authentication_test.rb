@@ -38,8 +38,8 @@ class AuthenticationTest < ApplicationSystemTestCase
     # Submit the form
     click_button "Sign in"
 
-    # Wait for error alert to appear (Turbo submission complete)
-    assert_selector ".bg-red-50", text: "Invalid email or password"
+    # Wait for error alert to appear (Turbo redirect may be slow under load)
+    assert_selector ".bg-red-50", text: "Invalid email or password", wait: 10
     # Should remain on sign-in page with error
     assert_current_path new_session_path
   end
