@@ -71,7 +71,7 @@ bin/coverage
 
 The CI pipeline (defined in `config/ci.rb`) runs:
 - **Setup**: Database preparation and dependency check
-- **Style checks**: EditorConfig, ERB linting (herb-tools), RuboCop
+- **Lint checks**: Overcommit pre-commit hooks (trailing whitespace, hard tabs, line endings, final newlines, YAML/JSON syntax, RuboCop, ErbLint, Reek)
 - **Security**: Importmap audit, Brakeman code analysis
 - **Tests**: Rails tests, System tests, Seeds replant
 - **Coverage**: SimpleCov report generation
@@ -98,7 +98,7 @@ SimpleCov.start "rails" do
   enable_coverage :branch
   minimum_coverage line: 95, branch: 95
   minimum_coverage_by_file 80
-  
+
   # Parallel test support
   parallelize_setup do |worker|
     SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
@@ -182,9 +182,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   private
 
   def sign_in_as(user)
-    post session_url, params: { 
-      email_address: user.email_address, 
-      password: "password123" 
+    post session_url, params: {
+      email_address: user.email_address,
+      password: "password123"
     }
   end
 end
@@ -199,8 +199,8 @@ require "test_helper"
 class Auth::ButtonComponentTest < ViewComponent::TestCase
   test "renders primary button" do
     component = Auth::ButtonComponent.new(
-      text: "Sign In", 
-      type: :submit, 
+      text: "Sign In",
+      type: :submit,
       variant: :primary
     )
     render_inline(component)
@@ -212,7 +212,7 @@ class Auth::ButtonComponentTest < ViewComponent::TestCase
 
   test "applies custom classes" do
     component = Auth::ButtonComponent.new(
-      text: "Test", 
+      text: "Test",
       class: "w-full"
     )
     render_inline(component)
@@ -269,9 +269,9 @@ Helper method for signing in users:
 ```ruby
 # In test files
 def sign_in_as(user)
-  post session_url, params: { 
-    email_address: user.email_address, 
-    password: "password123" 
+  post session_url, params: {
+    email_address: user.email_address,
+    password: "password123"
   }
 end
 
@@ -288,7 +288,7 @@ end
 ```ruby
 test "displays success message after user creation" do
   post users_url, params: { user: valid_user_params }
-  
+
   assert_redirected_to new_session_url
   assert_equal "Account created successfully! Please sign in.", flash[:notice]
 end
@@ -319,7 +319,7 @@ test "does not create user with invalid parameters" do
       }
     }
   end
-  
+
   assert_response :unprocessable_entity
 end
 ```
@@ -330,10 +330,10 @@ end
 # For components that depend on Current.user
 test "renders avatar for current user" do
   user = User.create!(email_address: "test@example.com", password: "password123")
-  
+
   # Set current user in component context
   render_inline(AvatarComponent.new(user: user))
-  
+
   assert_selector "img[alt='#{user.email_address}']"
   assert_text user.initials
 end
@@ -382,7 +382,7 @@ open coverage/index.html
 # Good: Create test data in setup
 setup do
   @user = User.create!(
-    email_address: "test@example.com", 
+    email_address: "test@example.com",
     password: "password123"
   )
 end
@@ -417,7 +417,7 @@ assert_response :success
 test "applies correct CSS classes" do
   component = Auth::ButtonComponent.new(text: "Test", variant: :secondary)
   render_inline(component)
-  
+
   assert_selector "button.bg-white"
   assert_selector "button.text-gray-900"
 end
@@ -426,7 +426,7 @@ end
 test "handles empty text gracefully" do
   component = Auth::ButtonComponent.new(text: "")
   render_inline(component)
-  
+
   assert_selector "button"
   assert_text ""
 end
@@ -450,7 +450,7 @@ test "debug failing test" do
   puts "Created user: #{user.inspect}"
   puts "User valid?: #{user.valid?}"
   puts "User errors: #{user.errors.full_messages}"
-  
+
   # Your test assertions...
 end
 
@@ -469,7 +469,7 @@ end
 test "debug system test with screenshot" do
   visit new_session_path
   take_screenshot  # Saves screenshot to tmp/screenshots/
-  
+
   fill_in "Email", with: "test@example.com"
   take_screenshot  # Another screenshot after interaction
 end
@@ -479,12 +479,12 @@ end
 
 ### Pre-commit Hooks
 
-The application runs full CI pipeline before commits:
+The application runs pre-commit lint checks via overcommit:
 
-1. **EditorConfig** - Formatting consistency
+1. **Overcommit hooks** - Trailing whitespace, hard tabs, line endings, final newlines, YAML/JSON syntax
 2. **RuboCop** - Code style and quality
-3. **Brakeman** - Security vulnerability scanning
-4. **Tests** - Full test suite with coverage
+3. **ErbLint** - ERB template linting
+4. **Reek** - Code smell detection
 
 ### Coverage Enforcement
 

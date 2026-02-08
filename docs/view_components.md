@@ -260,24 +260,24 @@ require "test_helper"
 class ButtonComponentTest < ViewComponent::TestCase
   test "renders button with text" do
     render_inline ButtonComponent.new(text: "Click me")
-    
+
     assert_selector "button", text: "Click me"
     assert_selector "button.btn.btn-primary"
   end
 
   test "renders secondary variant" do
     render_inline ButtonComponent.new(text: "Cancel", variant: :secondary)
-    
+
     assert_selector "button.btn.btn-secondary"
   end
 
   test "passes through options" do
     render_inline ButtonComponent.new(
-      text: "Submit", 
-      disabled: true, 
+      text: "Submit",
+      disabled: true,
       data: { confirm: "Are you sure?" }
     )
-    
+
     assert_selector "button[disabled]"
     assert_selector "button[data-confirm='Are you sure?']"
   end
@@ -450,7 +450,7 @@ Access Rails helpers in components:
 ```ruby
 class UtilityComponent < ViewComponent::Base
   include IconHelper  # Direct inclusion
-  
+
   def formatted_date
     helpers.time_ago_in_words(Time.current)
   end
@@ -461,7 +461,7 @@ class UtilityComponent < ViewComponent::Base
 
   # Using use_helpers for specific helpers
   use_helpers :current_user, :user_path
-  
+
   def navigation_link
     link_to "Dashboard", user_path(current_user)
   end
@@ -576,11 +576,11 @@ class ComponentBase < ViewComponent::Base
 
   def css_classes(*classes, **conditionals)
     all_classes = classes.flatten.compact
-    
+
     conditionals.each do |css_class, condition|
       all_classes << css_class if condition
     end
-    
+
     all_classes.join(" ")
   end
 end
@@ -648,7 +648,7 @@ Document component APIs:
 #
 # @example With variant and options
 #   <%= render ButtonComponent.new(
-#     text: "Delete", 
+#     text: "Delete",
 #     variant: :danger,
 #     data: { confirm: "Are you sure?" }
 #   ) %>
@@ -665,13 +665,13 @@ Test component behavior thoroughly:
 class ButtonComponentTest < ViewComponent::TestCase
   test "renders with required attributes" do
     render_inline ButtonComponent.new(text: "Click me")
-    
+
     assert_selector "button", text: "Click me"
   end
 
   test "applies variant classes correctly" do
     render_inline ButtonComponent.new(text: "Test", variant: :danger)
-    
+
     assert_selector "button.btn-danger"
   end
 

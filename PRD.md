@@ -1,9 +1,9 @@
 # Product Requirements Document (PRD)
 # RailsStarter
 
-**Version**: 0.1  
-**Date**: June 2025  
-**Status**: In Development  
+**Version**: 0.1
+**Date**: June 2025
+**Status**: In Development
 
 ## Executive Summary
 
@@ -28,7 +28,7 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 - **Responsive Design** - Mobile-friendly interface with Tailwind CSS and dark mode support
 - **Testing Framework** - 99%+ test coverage with SimpleCov and comprehensive CI/CD pipeline
 - **Multi-Database Setup** - Separate SQLite databases for primary, cache, queue, and cable
-- **Development Tools** - Code quality pipeline with RuboCop, Brakeman, and EditorConfig
+- **Development Tools** - Code quality pipeline with RuboCop, Brakeman, Overcommit, and ErbLint
 
 ### UI Components
 - **Authentication Components** - Form containers, input fields, buttons, and links
@@ -77,7 +77,7 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 ## Dependencies
 
 ### Current Dependencies
-- **Ruby 3.4.7** - Application runtime
+- **Ruby 4.0.1** - Application runtime
 - **Rails 8.1.0** - Web framework with Solid libraries
 - **SQLite3** - Database for all environments
 - **ViewComponent** - UI component framework
@@ -95,6 +95,6 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 RailsStarter has established a solid foundation with a complete authentication system and modern Rails infrastructure. The application currently provides:
 
 - **Secure user management** with industry-standard authentication
-- **Modern component architecture** for maintainable UI development  
+- **Modern component architecture** for maintainable UI development
 - **Comprehensive testing** with 99%+ coverage ensuring code quality
 - **Production-ready deployment** with Kamal and SQLite3

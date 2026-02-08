@@ -7,7 +7,7 @@ This directory contains scripts to help developers and AI assistants maintain co
 ### `ci`
 Comprehensive CI pipeline that runs all checks and tests. Use `./bin/ci --fix` to automatically fix formatting issues before running checks.
 
-- **Code formatting**: eclint and rubocop
+- **Code formatting**: overcommit hooks (trailing whitespace, hard tabs, line endings, final newlines) and rubocop
 - **Security scanning**: brakeman
 - **Testing**: Rails unit and system tests
 - **Coverage reporting**: Automatically generates coverage reports when available

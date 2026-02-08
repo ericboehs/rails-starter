@@ -1,0 +1,59 @@
+gemfile: Gemfile
+plugin_directory: '.git-hooks'
+
+PreCommit:
+  AuthorName:
+    enabled: false
+  AuthorEmail:
+    enabled: false
+  TrailingWhitespace:
+    enabled: true
+  HardTabs:
+    enabled: true
+  LineEndings:
+    enabled: true
+    exclude:
+      - '**/*.png'
+      - '**/*.ico'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+  YamlSyntax:
+    enabled: true
+  JsonSyntax:
+    enabled: true
+  RuboCop:
+    enabled: true
+    on_warn: fail
+  ErbLint:
+    enabled: true
+  Reek:
+    enabled: true
+  MergeConflicts:
+    enabled: true
+  FinalNewline:
+    enabled: true
+
+PostCheckout:
+  BundleInstall:
+    enabled: true
+    quiet: true
+  MigrationCheck:
+    enabled: true
+    quiet: true
+
+PostMerge:
+  BundleInstall:
+    enabled: true
+    quiet: true
+  MigrationCheck:
+    enabled: true
+    quiet: true
+
+PostRewrite:
+  BundleInstall:
+    enabled: true
+    quiet: true
+  MigrationCheck:
+    enabled: true
+    quiet: true

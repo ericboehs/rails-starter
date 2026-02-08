@@ -10,7 +10,7 @@ This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAud
 
 ### Code Quality & Testing
 - `bin/ci` - Run full CI pipeline (formatting, linting, security scan, tests, coverage)
-- `bin/ci --fix` - Auto-fix formatting issues before running CI checks  
+- `bin/ci --fix` - Auto-fix RuboCop and ERB lint issues before running CI checks
 - `bin/coverage` - Generate detailed test coverage report with line/branch analysis
 - `bin/watch-ci` - Monitor CI status in real-time during development
 
@@ -24,11 +24,11 @@ This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAud
 - `rubocop` - Ruby style checking (Rails Omakase style)
 - `rubocop -A` - Auto-fix Ruby style violations
 - `bundle exec reek` - Code smell detection
+- `bundle exec erb_lint --lint-all` - ERB template linting
+- `bundle exec overcommit --run` - Run all pre-commit checks (whitespace, tabs, line endings, final newlines, YAML/JSON syntax, merge conflicts, RuboCop, ErbLint, Reek)
 - `bin/rails zeitwerk:check` - Verify Rails autoloading
 - `bundle exec bundle-audit check` - Check for vulnerable gem versions
 - `brakeman` - Security vulnerability scanning
-- `npx eclint check` - EditorConfig compliance checking
-- `npx eclint fix` - Auto-fix EditorConfig violations
 
 ## Architecture & Configuration
 
@@ -44,12 +44,14 @@ This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAud
 The application uses separate SQLite databases:
 - Primary database for application data
 - `cache` database for Solid Cache
-- `queue` database for Solid Queue  
+- `queue` database for Solid Queue
 - `cable` database for Solid Cable
 
 ### Code Quality Standards
-- **EditorConfig**: UTF-8, LF line endings, 2-space indentation
+- **Overcommit**: Git hook manager enforcing trailing whitespace, hard tabs, line endings, final newlines, YAML/JSON syntax
+- **EditorConfig**: UTF-8, LF line endings, 2-space indentation (enforced by editors natively + overcommit hooks)
 - **RuboCop**: Rails Omakase configuration (DHH's opinionated style)
+- **ErbLint**: ERB template linting (Shopify's erb_lint)
 - **Reek**: Code smell detection for maintainability
 - **Zeitwerk**: Autoloading verification for Rails constants
 - **bundler-audit**: Vulnerability scanning for gem dependencies
@@ -61,7 +63,7 @@ The application uses separate SQLite databases:
 - **Capybara + Selenium** for system tests
 - **Axe-core** for automated accessibility testing (WCAG 2.1 AA)
 - **SimpleCov** for coverage analysis with branch coverage tracking
-- Pre-commit hooks run full CI pipeline to ensure quality
+- Pre-commit hooks run fast lint/style checks via overcommit (not full CI)
 
 See `docs/accessibility.md` for detailed accessibility testing guide.
 
@@ -80,10 +82,12 @@ See `docs/accessibility.md` for detailed accessibility testing guide.
 - `.editorconfig` - Code formatting standards
 
 ### Quality Assurance
+- `overcommit` for git hook management (pre-commit lint checks)
 - `rubocop` configured with Rails Omakase
+- `erb_lint` for ERB template linting
 - `brakeman` for security scanning
-- `eclint` for EditorConfig enforcement
-- Pre-commit hooks ensure code quality
+- `.editorconfig` for editor-native formatting standards
+- Pre-commit hooks enforce code quality via overcommit
 
 ### Commit Messages
 

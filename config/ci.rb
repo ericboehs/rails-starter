@@ -6,15 +6,12 @@ CI.run do
 
   # Apply fixes if --fix flag is passed
   if ARGV.include?("--fix")
-    step "Style: EditorConfig auto-fix", "npx eclint fix 'app/**/*' 'config/**/*' 'lib/**/*' 'test/**/*' 'bin/*' 'Gemfile*' 'Rakefile' '*.rb' '*.yml' '*.yaml' '*.js' '*.css' '*.html' '*.erb' '*.md'"
     step "Style: RuboCop auto-fix", "bin/rubocop -A"
+    step "Style: ERB lint auto-fix", "bundle exec erb_lint --autocorrect"
   end
 
-  step "Style: EditorConfig", "npx eclint check 'app/**/*' 'config/**/*' 'lib/**/*' 'test/**/*' 'bin/*' 'Gemfile*' 'Rakefile' '*.rb' '*.yml' '*.yaml' '*.js' '*.css' '*.html' '*.erb' '*.md'"
-  step "Style: ERB", "npx @herb-tools/linter 'app/**/*.erb'"
-  step "Style: Ruby", "bin/rubocop"
+  step "Lint: Overcommit checks", "bundle exec overcommit --run"
   step "Style: GitHub Actions", "actionlint"
-  step "Quality: Code smells", "bundle exec reek"
   step "Quality: Zeitwerk autoloading", "bin/rails zeitwerk:check"
   step "Security: Bundler vulnerability audit", "bundle exec bundle-audit check --update"
   step "Security: Importmap vulnerability audit", "bin/importmap audit"

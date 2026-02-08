@@ -61,7 +61,7 @@ The application uses a session-based authentication system built with Rails 8.1.
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
-  
+
   validates :email_address, presence: true, uniqueness: true
   normalizes :email_address, with: ->(email) { email.strip.downcase }
 end
@@ -78,7 +78,7 @@ end
 ```ruby
 class Session < ApplicationRecord
   belongs_to :user
-  
+
   before_create { self.token = SecureRandom.base58(32) }
 end
 ```
@@ -111,7 +111,7 @@ Use the `authentication_required` method in controllers:
 ```ruby
 class DashboardController < ApplicationController
   before_action :authentication_required
-  
+
   def index
     # Only accessible to authenticated users
   end
@@ -185,7 +185,7 @@ The authentication system uses ViewComponents for consistent UI:
 ```erb
 <%= render Auth::FormContainerComponent.new(title_key: "auth.sign_in.title") do %>
   <%= render 'shared/flash_messages' %>
-  
+
   <%= form_with url: session_path, local: true do |form| %>
     <%= render Auth::InputComponent.new(
       form: form,
@@ -194,7 +194,7 @@ The authentication system uses ViewComponents for consistent UI:
       type: :email,
       required: true
     ) %>
-    
+
     <%= render Auth::ButtonComponent.new(
       text: t("auth.sign_in.submit_button"),
       type: :submit,
@@ -234,9 +234,9 @@ Helper method for signing in users during tests:
 
 ```ruby
 def sign_in_as(user)
-  post session_url, params: { 
-    email_address: user.email_address, 
-    password: "password123" 
+  post session_url, params: {
+    email_address: user.email_address,
+    password: "password123"
   }
 end
 ```
