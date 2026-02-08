@@ -1,0 +1,82 @@
+gemfile: Gemfile
+plugin_directory: '.git-hooks'
+
+PreCommit:
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - '**/*.md'
+      - '**/*.enc'
+      - '**/*.png'
+      - '**/*.ico'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+      - '**/*.svg'
+  HardTabs:
+    enabled: true
+    exclude:
+      - 'Makefile'
+      - '**/*.png'
+      - '**/*.ico'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+  LineEndings:
+    enabled: true
+    exclude:
+      - '**/*.png'
+      - '**/*.ico'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+  YamlSyntax:
+    enabled: true
+  JsonSyntax:
+    enabled: true
+  RuboCop:
+    enabled: true
+    command: ['bundle', 'exec', 'rubocop']
+    on_warn: fail
+  ErbLint:
+    enabled: true
+    command: ['bundle', 'exec', 'erb_lint']
+  Reek:
+    enabled: true
+    command: ['bundle', 'exec', 'reek']
+  MergeConflicts:
+    enabled: true
+  FinalNewline:
+    enabled: true
+    exclude:
+      - '**/*.enc'
+      - '**/*.png'
+      - '**/*.ico'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+
+CommitMsg:
+  ALL:
+    enabled: false
+
+PostCheckout:
+  BundleCheck:
+    enabled: true
+    quiet: true
+  MigrationCheck:
+    enabled: true
+    quiet: true
+
+PostMerge:
+  BundleCheck:
+    enabled: true
+    quiet: true
+  MigrationCheck:
+    enabled: true
+    quiet: true
+
+PostRewrite:
+  BundleCheck:
+    enabled: true
+    quiet: true

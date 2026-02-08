@@ -1,7 +1,7 @@
 <%= render Auth::FormContainerComponent.new(
   title_key: "auth.forgot_password.title"
 ) do %>
-  <%= render 'shared/flash_messages' %>
+  <%= render "shared/flash_messages" %>
 
   <%= form_with url: passwords_path, local: true, class: "space-y-6" do |form| %>
     <%= render Auth::InputComponent.new(

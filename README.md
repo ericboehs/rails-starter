@@ -96,8 +96,10 @@ bin/coverage
 
 ### Code Standards
 
+- **Overcommit**: Git hook management for pre-commit lint checks
 - **EditorConfig**: UTF-8, LF line endings, 2-space indentation
 - **RuboCop**: Rails Omakase configuration
+- **ErbLint**: ERB template linting
 - **SimpleCov**: 95% minimum coverage requirement
 - **Conventional Commits**: Structured commit messages
 

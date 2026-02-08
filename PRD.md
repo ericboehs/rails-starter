@@ -28,7 +28,7 @@ RailsStarter is currently in the foundation phase, with a complete authenticatio
 - **Responsive Design** - Mobile-friendly interface with Tailwind CSS and dark mode support
 - **Testing Framework** - 99%+ test coverage with SimpleCov and comprehensive CI/CD pipeline
 - **Multi-Database Setup** - Separate SQLite databases for primary, cache, queue, and cable
-- **Development Tools** - Code quality pipeline with RuboCop, Brakeman, and EditorConfig
+- **Development Tools** - Code quality pipeline with RuboCop, Brakeman, Overcommit, and ErbLint
 
 ### UI Components
 - **Authentication Components** - Form containers, input fields, buttons, and links

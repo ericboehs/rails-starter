@@ -71,7 +71,7 @@ bin/coverage
 
 The CI pipeline (defined in `config/ci.rb`) runs:
 - **Setup**: Database preparation and dependency check
-- **Style checks**: EditorConfig, ERB linting (herb-tools), RuboCop
+- **Lint checks**: Overcommit pre-commit hooks (trailing whitespace, hard tabs, line endings, final newlines, YAML/JSON syntax, RuboCop, ErbLint, Reek)
 - **Security**: Importmap audit, Brakeman code analysis
 - **Tests**: Rails tests, System tests, Seeds replant
 - **Coverage**: SimpleCov report generation
@@ -479,12 +479,12 @@ end
 
 ### Pre-commit Hooks
 
-The application runs full CI pipeline before commits:
+The application runs pre-commit lint checks via overcommit:
 
-1. **EditorConfig** - Formatting consistency
+1. **Overcommit hooks** - Trailing whitespace, hard tabs, line endings, final newlines, YAML/JSON syntax
 2. **RuboCop** - Code style and quality
-3. **Brakeman** - Security vulnerability scanning
-4. **Tests** - Full test suite with coverage
+3. **ErbLint** - ERB template linting
+4. **Reek** - Code smell detection
 
 ### Coverage Enforcement
 

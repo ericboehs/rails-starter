@@ -1,4 +1,4 @@
-<%= render UserPageComponent.new(title_key: 'users.edit.title') do %>
+<%= render UserPageComponent.new(title_key: "users.edit.title") do %>
   <%= form_with model: @user, url: user_path, method: :patch, local: true, class: "space-y-6" do |f| %>
     <% if @user.errors.any? %>
       <div class="mb-4">
@@ -11,13 +11,13 @@
 
     <div class="flex flex-col items-center mb-8">
       <%= render AvatarComponent.new(user: @user, size: 20, text_size: "2xl") %>
-      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400"><%= t('users.avatar.gravatar_description') %></p>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400"><%= t("users.avatar.gravatar_description") %></p>
     </div>
 
     <%= render Auth::InputComponent.new(
       form: f,
       field: :email_address,
-      label: t('users.form.email_label'),
+      label: t("users.form.email_label"),
       type: :email,
       required: true,
       autocomplete: "username",
@@ -28,18 +28,18 @@
       <%= render Auth::InputComponent.new(
         form: f,
         field: :password,
-        label: t('users.form.password_label'),
+        label: t("users.form.password_label"),
         type: :password,
         autocomplete: "new-password",
         error: @user.errors[:password].first
       ) %>
-      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400"><%= t('users.form.password_help') %></p>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400"><%= t("users.form.password_help") %></p>
     </div>
 
     <%= render Auth::InputComponent.new(
       form: f,
       field: :password_confirmation,
-      label: t('users.form.password_confirmation_label'),
+      label: t("users.form.password_confirmation_label"),
       type: :password,
       autocomplete: "new-password",
       error: @user.errors[:password_confirmation].first
@@ -47,12 +47,12 @@
 
     <div class="flex justify-end gap-3">
       <%= render Auth::LinkButtonComponent.new(
-        text: t('buttons.cancel'),
+        text: t("buttons.cancel"),
         url: user_path,
         variant: :secondary
       ) %>
       <%= render Auth::ButtonComponent.new(
-        text: t('users.form.update_button'),
+        text: t("users.form.update_button"),
         type: :submit,
         variant: :primary
       ) %>

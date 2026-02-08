@@ -57,6 +57,12 @@ group :development, :test do
 
   # Code smell detection [https://github.com/troessner/reek]
   gem "reek", require: false
+
+  # Git hook management [https://github.com/sds/overcommit]
+  gem "overcommit", require: false
+
+  # ERB linting [https://github.com/Shopify/erb_lint]
+  gem "erb_lint", require: false
 end
 
 # A framework for building reusable, testable & encapsulated view components
