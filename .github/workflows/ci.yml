@@ -19,15 +19,8 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install overcommit hooks
-        run: |
-          bundle exec overcommit --install
-          git config --local overcommit.verify false
-          bundle exec overcommit --sign
-          bundle exec overcommit --sign pre-commit
-          bundle exec overcommit --sign post-checkout
-          bundle exec overcommit --sign post-merge
-          bundle exec overcommit --sign post-rewrite
+      - name: Trust overcommit config
+        run: git config --local overcommit.verify false
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable
