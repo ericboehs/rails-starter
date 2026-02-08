@@ -7,6 +7,7 @@ CI.run do
   # Apply fixes if --fix flag is passed
   if ARGV.include?("--fix")
     step "Style: RuboCop auto-fix", "bin/rubocop -A"
+    step "Style: ERB lint auto-fix", "bundle exec erb_lint --autocorrect"
   end
 
   step "Lint: Overcommit checks", "bundle exec overcommit --run"

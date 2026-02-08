@@ -26,6 +26,8 @@ jobs:
           bundle exec overcommit --sign
           bundle exec overcommit --sign pre-commit
           bundle exec overcommit --sign post-checkout
+          bundle exec overcommit --sign post-merge
+          bundle exec overcommit --sign post-rewrite
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable

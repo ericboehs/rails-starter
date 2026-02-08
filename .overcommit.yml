@@ -2,6 +2,10 @@ gemfile: Gemfile
 plugin_directory: '.git-hooks'
 
 PreCommit:
+  AuthorName:
+    enabled: false
+  AuthorEmail:
+    enabled: false
   TrailingWhitespace:
     enabled: true
     exclude:
