@@ -23,6 +23,9 @@ jobs:
         run: |
           bundle exec overcommit --install
           git config --local overcommit.verify false
+          bundle exec overcommit --sign
+          bundle exec overcommit --sign pre-commit
+          bundle exec overcommit --sign post-checkout
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable
