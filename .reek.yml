@@ -2,8 +2,6 @@
 
 exclude_paths:
   - db/migrate
-  - test
-  - .git-hooks
 
 detectors:
   BooleanParameter:
@@ -14,3 +12,6 @@ detectors:
     exclude:
       - PasswordsController              # @user set by before_action
       - UsersController                   # @user set in actions for views
+  UtilityFunction:
+    exclude:
+      - PasswordsMailerPreview#reset      # previews don't use instance state by design

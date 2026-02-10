@@ -1,5 +1,6 @@
 require "test_helper"
 
+# Tests User model validations, authentication, and associations
 class UserTest < ActiveSupport::TestCase
   setup do
     @user = User.create!(

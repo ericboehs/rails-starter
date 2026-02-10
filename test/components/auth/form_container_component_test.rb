@@ -5,8 +5,7 @@ require "test_helper"
 # Tests the Auth::FormContainerComponent component
 class Auth::FormContainerComponentTest < ViewComponent::TestCase
   def test_renders_with_title_key
-    component = Auth::FormContainerComponent.new(title_key: "auth.sign_in.title")
-    render_inline(component) { "Form content" }
+    render_sign_in_form
 
     assert_selector "h1", text: "Sign in to your account"
     assert_text "Form content"
@@ -60,5 +59,12 @@ class Auth::FormContainerComponentTest < ViewComponent::TestCase
 
     assert_selector "h1", text: "Custom Title"
     assert_text "Form content"
+  end
+
+  private
+
+  def render_sign_in_form
+    component = Auth::FormContainerComponent.new(title_key: "auth.sign_in.title")
+    render_inline(component) { "Form content" }
   end
 end
