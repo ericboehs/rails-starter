@@ -41,7 +41,6 @@ class AlertComponent < ViewComponent::Base
     }
   }.freeze
 
-  # :reek:BooleanParameter - dismissible flag for optional close button
   def initialize(message: nil, messages: nil, type: :info, dismissible: false)
     @message = message
     @messages = messages

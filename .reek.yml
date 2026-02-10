@@ -2,4 +2,15 @@
 
 exclude_paths:
   - db/migrate
+  - test
   - .git-hooks
+
+detectors:
+  BooleanParameter:
+    exclude:
+      - AlertComponent#initialize        # dismissible flag for optional close button
+      - Auth::LinkComponent#initialize    # centered flag for optional layout styling
+  InstanceVariableAssumption:
+    exclude:
+      - PasswordsController              # @user set by before_action
+      - UsersController                   # @user set in actions for views

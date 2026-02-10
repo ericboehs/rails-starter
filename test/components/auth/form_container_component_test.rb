@@ -4,7 +4,6 @@ require "test_helper"
 
 # Tests the Auth::FormContainerComponent component
 class Auth::FormContainerComponentTest < ViewComponent::TestCase
-  # :reek:TooManyStatements - Test setup + render + multiple assertions
   def test_renders_with_title_key
     component = Auth::FormContainerComponent.new(title_key: "auth.sign_in.title")
     render_inline(component) { "Form content" }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# :reek:InstanceVariableAssumption - @user set in actions for views
+# Manages user registration, profile viewing, and account updates
 class UsersController < ApplicationController
   skip_before_action :require_authentication, only: [ :new, :create ]
 

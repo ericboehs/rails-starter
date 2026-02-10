@@ -1,7 +1,5 @@
 require "test_helper"
 
-# session1/session2 in these DSL-style tests trigger Reek despite being clear.
-# :reek:UncommunicativeVariableName { enabled: false }
 class UserTest < ActiveSupport::TestCase
   setup do
     @user = User.create!(
@@ -90,11 +88,11 @@ class UserTest < ActiveSupport::TestCase
       password: "password123"
     )
 
-    session1 = user.sessions.create!(user_agent: "Test Agent 1", ip_address: "127.0.0.1")
-    session2 = user.sessions.create!(user_agent: "Test Agent 2", ip_address: "127.0.0.1")
+    first_session = user.sessions.create!(user_agent: "Test Agent 1", ip_address: "127.0.0.1")
+    second_session = user.sessions.create!(user_agent: "Test Agent 2", ip_address: "127.0.0.1")
 
-    assert_includes user.sessions, session1
-    assert_includes user.sessions, session2
+    assert_includes user.sessions, first_session
+    assert_includes user.sessions, second_session
     assert_equal 2, user.sessions.count
   end
 

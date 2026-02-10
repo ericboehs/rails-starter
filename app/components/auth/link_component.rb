@@ -1,6 +1,5 @@
 # Renders styled text links for authentication pages
 class Auth::LinkComponent < ViewComponent::Base
-  # :reek:BooleanParameter - centered flag for optional layout styling
   def initialize(text:, url:, centered: true)
     @text = text
     @url = url

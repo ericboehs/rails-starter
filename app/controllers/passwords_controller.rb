@@ -1,4 +1,4 @@
-# :reek:InstanceVariableAssumption - @user set by before_action
+# Handles password reset requests and updates via token-based authentication
 class PasswordsController < ApplicationController
   allow_unauthenticated_access
   before_action :set_user_by_token, only: %i[ edit update ]

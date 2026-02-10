@@ -4,7 +4,6 @@ require "test_helper"
 
 # Tests the Auth::InputComponent component
 class Auth::InputComponentTest < ViewComponent::TestCase
-  # :reek:TooManyStatements - Test setup + render + multiple assertions
   def test_renders_email_input
     form = ActionView::Helpers::FormBuilder.new(:user, User.new, vc_test_controller.view_context, {})
     component = Auth::InputComponent.new(
