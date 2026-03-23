@@ -3,7 +3,7 @@
     <div class="relative flex h-16 justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button -->
-        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-500 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-white focus:ring-inset" aria-controls="mobile-menu" aria-expanded="false" data-action="click->navbar#toggleMobileMenu">
+        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-500 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-white focus:ring-inset" aria-controls="mobile-menu" aria-expanded="false" data-action="click->navbar#toggleMobileMenu keydown->navbar#handleMobileButtonKeydown">
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only"><%= t("navigation.mobile_menu.open") %></span>
           <!-- Menu open: "hidden", Menu closed: "block" -->
@@ -23,21 +23,14 @@
           <% end %>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-          <!-- Current: "border-emerald-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-          <% if current_page?(root_path) %>
-            <%= link_to root_path, class: "inline-flex items-center border-b-2 border-emerald-500 px-1 pt-1 text-sm font-medium text-gray-900 dark:text-white hover:no-underline", "aria-current": "page" do %>
-              <%= t("navigation.dashboard") %>
-            <% end %>
-          <% else %>
-            <%= link_to t("navigation.dashboard"), root_path, class: "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white" %>
-          <% end %>
+          <%= nav_link t("navigation.dashboard"), root_path %>
         </div>
       </div>
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <!-- Profile dropdown -->
         <div class="relative">
           <div>
-            <button type="button" class="relative flex rounded-full bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true" data-action="click->navbar#toggleDropdown">
+            <button type="button" class="relative flex rounded-full bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true" data-action="click->navbar#toggleDropdown keydown->navbar#handleButtonKeydown">
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only"><%= t("navigation.user_menu.open") %></span>
               <%= render AvatarComponent.new(user: Current.user, size: 8, text_size: "sm") %>
@@ -46,9 +39,9 @@
 
           <!-- Dropdown menu -->
           <div class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-700 py-1 shadow-lg ring-1 ring-black/5 dark:ring-white/10 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" data-navbar-target="dropdown">
-            <%= link_to t("navigation.user_menu.profile"), user_path, class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600", role: "menuitem" %>
+            <%= link_to t("navigation.user_menu.profile"), user_path, class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none", role: "menuitem" %>
             <%= link_to t("navigation.user_menu.sign_out"), session_path, data: { "turbo-method": :delete },
-                class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600", role: "menuitem" %>
+                class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-gray-100 dark:focus:bg-gray-600 focus:outline-none", role: "menuitem" %>
           </div>
         </div>
       </div>
@@ -58,14 +51,7 @@
   <!-- Mobile menu, show/hide based on menu state. -->
   <div class="hidden sm:hidden" id="mobile-menu" data-navbar-target="mobileMenu">
     <div class="space-y-1 px-2 pt-2 pb-3">
-      <!-- Light mode: "bg-emerald-50 border-emerald-500 text-emerald-700", Dark mode: "bg-gray-900 text-white" -->
-      <% if current_page?(root_path) %>
-        <%= link_to root_path, class: "block border-l-4 border-emerald-500 bg-emerald-50 dark:bg-gray-900 py-2 pl-3 pr-4 text-base font-medium text-emerald-700 dark:text-white dark:border-none dark:rounded-md hover:bg-emerald-50 dark:hover:bg-gray-900" do %>
-          <%= t("navigation.dashboard") %>
-        <% end %>
-      <% else %>
-        <%= link_to t("navigation.dashboard"), root_path, class: "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" %>
-      <% end %>
+      <%= mobile_nav_link t("navigation.dashboard"), root_path %>
     </div>
   </div>
 </nav>

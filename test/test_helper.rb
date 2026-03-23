@@ -69,6 +69,8 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    # Include authentication helpers for integration tests
+    Dir[Rails.root.join("test/support/**/*.rb")].each { |f| require f }
+    include AuthenticationHelpers
   end
 end
