@@ -23,9 +23,8 @@ module ApplicationHelper
   def format_phone(phone)
     return nil if phone.blank?
 
-    digits = phone.gsub(/\D/, "")
-    digit_count = digits.length
-    digits = digits[1..] if digit_count == 11 && digits.start_with?("1")
+    raw_digits = phone.gsub(/\D/, "")
+    digits = raw_digits.start_with?("1") && raw_digits.length == 11 ? raw_digits[1..] : raw_digits
 
     return phone unless digits.length == 10
 
