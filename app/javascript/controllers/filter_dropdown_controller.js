@@ -133,11 +133,11 @@ export default class extends Controller {
   }
 
   closeOtherDropdowns() {
-    document.querySelectorAll("[data-controller*='filter-dropdown']").forEach(element => {
+    document.querySelectorAll("[data-controller~='filter-dropdown']").forEach(element => {
       if (element !== this.element) {
         const controller = this.application.getControllerForElementAndIdentifier(element, "filter-dropdown")
         if (controller && controller.isOpen()) {
-          controller.closeMenu()
+          controller.dismissMenu()
         }
       }
     })

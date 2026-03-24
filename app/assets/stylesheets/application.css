@@ -19,8 +19,6 @@
 [role="menu"] a:focus,
 [role="menu"] a:focus-visible,
 [role="menu"] button:focus,
-[role="menu"] button:focus-visible,
-[role="listbox"] button:focus,
-[role="listbox"] button:focus-visible {
+[role="menu"] button:focus-visible {
   outline: none !important;
 }
