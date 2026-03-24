@@ -24,7 +24,8 @@ module ApplicationHelper
     return nil if phone.blank?
 
     digits = phone.gsub(/\D/, "")
-    digits = digits[1..] if digits.length == 11 && digits.start_with?("1")
+    digit_count = digits.length
+    digits = digits[1..] if digit_count == 11 && digits.start_with?("1")
 
     return phone unless digits.length == 10
 
