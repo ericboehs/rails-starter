@@ -6,7 +6,8 @@ module ButtonStyling
 
   VARIANT_CLASSES = {
     primary: "bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-500 dark:hover:bg-emerald-400 focus-visible:outline-emerald-600 dark:focus-visible:outline-emerald-500",
-    secondary: "bg-white dark:bg-white/10 text-gray-900 dark:text-white ring-1 ring-gray-300 dark:ring-white/20 ring-inset hover:bg-gray-50 dark:hover:bg-white/20"
+    secondary: "bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-none inset-ring inset-ring-gray-300 dark:inset-ring-white/10 hover:bg-gray-50 dark:hover:bg-white/20",
+    danger: "bg-red-600 text-white hover:bg-red-500 focus-visible:outline-red-600"
   }.freeze
 
   private
