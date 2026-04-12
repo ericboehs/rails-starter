@@ -5,9 +5,14 @@ on:
   push:
     branches: [ main ]
 
+permissions: {}
+
 jobs:
   ci:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
@@ -28,7 +33,9 @@ jobs:
       - name: Install actionlint
         run: |
           ACTIONLINT_VERSION=1.7.7
+          ACTIONLINT_CHECKSUM=023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
           curl -sLO "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          echo "${ACTIONLINT_CHECKSUM}  actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz" | sha256sum -c -
           tar xzf "actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
           sudo mv actionlint /usr/local/bin/
 
