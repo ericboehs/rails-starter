@@ -6,11 +6,14 @@ SimpleCov.start "rails" do
   # Enable coverage for branches (Ruby 2.5+) - must come before minimum_coverage
   enable_coverage :branch
 
-  # Set minimum coverage percentage
-  minimum_coverage line: 95, branch: 95
-
-  # Set coverage percentage precision
-  minimum_coverage_by_file 80
+  # Skip coverage thresholds for system tests — they run separately and only cover a
+  # fraction of the codebase. The merged result is checked by bin/coverage.
+  unless ENV["SKIP_COVERAGE_MINIMUM"]
+    minimum_coverage line: 95, branch: 95
+    minimum_coverage_by_file 80
+    refuse_coverage_drop :line, :branch
+    maximum_coverage_drop 5
+  end
 
   # Add filters for files/directories to exclude from coverage
   add_filter "/spec/"
@@ -39,12 +42,6 @@ SimpleCov.start "rails" do
   formatter SimpleCov::Formatter::MultiFormatter.new([
     SimpleCov::Formatter::HTMLFormatter
   ])
-
-  # Refuse to run tests if coverage drops below threshold
-  refuse_coverage_drop :line, :branch
-
-  # Maximum coverage drop allowed
-  maximum_coverage_drop 5
 end
 
 ENV["RAILS_ENV"] ||= "test"

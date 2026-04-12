@@ -34,7 +34,7 @@ This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAud
 
 ### Modern Rails Stack
 - **Rails 8.1.0** with modern asset pipeline (Propshaft)
-- **Ruby 4.0.1**
+- **Ruby 4.0.2**
 - **SQLite3** for all environments including production
 - **ImportMap** for JavaScript (no Node.js bundling)
 - **Hotwire** (Turbo + Stimulus) for interactivity
@@ -57,6 +57,12 @@ The application uses separate SQLite databases:
 - **bundler-audit**: Vulnerability scanning for gem dependencies
 - **Brakeman**: Security scanning for Rails-specific vulnerabilities
 - **SimpleCov**: Test coverage with detailed HTML reports
+
+### Linting Rules (IMPORTANT)
+
+- **NEVER add inline RuboCop disables** (`# rubocop:disable`, `# rubocop:todo`). Fix the code or configure the rule in `.rubocop.yml` instead.
+- **NEVER add Reek disables** — no inline `:reek:SomeSmell` comments AND no `.reek.yml` exclusions. Fix the code instead.
+- **Claude Code lint hooks** (`.claude/hooks/`) run RuboCop, Reek, and ERB Lint automatically after every file write/edit. Fix all issues the hooks report — do not suppress them.
 
 ### Testing Setup
 - **Minitest** (Rails default) for unit and integration tests
