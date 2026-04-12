@@ -1,5 +1,3 @@
-# Reek configuration. See https://github.com/troessner/reek
-
 exclude_paths:
   - db/migrate
   - .git-hooks
@@ -7,17 +5,5 @@ exclude_paths:
   - test
 
 detectors:
-  BooleanParameter:
-    exclude:
-      - AlertComponent#initialize        # dismissible flag for optional close button
-      - Auth::LinkComponent#initialize    # centered flag for optional layout styling
-  InstanceVariableAssumption:
-    exclude:
-      - PasswordsController              # @user set by before_action
-      - UsersController                   # @user set in actions for views
   TooManyStatements:
     max_statements: 10
-  UtilityFunction:
-    exclude:
-      - PasswordsMailerPreview#reset      # previews don't use instance state by design
-      - ApplicationHelper#format_phone    # view helper — logically belongs here

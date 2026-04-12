@@ -4,6 +4,11 @@
 class UsersController < ApplicationController
   skip_before_action :require_authentication, only: [ :new, :create ]
 
+  def initialize
+    super
+    @user = nil
+  end
+
   def new
     @user = User.new
   end

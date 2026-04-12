@@ -30,7 +30,7 @@ class Auth::LinkComponentTest < ViewComponent::TestCase
     component = Auth::LinkComponent.new(
       url: "/test-url",
       text: "Test Link",
-      centered: false
+      align: :left
     )
     render_inline(component)
 

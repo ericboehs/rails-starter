@@ -3,6 +3,11 @@ class PasswordsController < ApplicationController
   allow_unauthenticated_access
   before_action :set_user_by_token, only: %i[ edit update ]
 
+  def initialize
+    super
+    @user = nil
+  end
+
   def new
   end
 

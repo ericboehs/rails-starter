@@ -1,18 +1,18 @@
 # Renders styled text links for authentication pages
 class Auth::LinkComponent < ViewComponent::Base
-  def initialize(text:, url:, centered: true)
+  def initialize(text:, url:, align: :center)
     @text = text
     @url = url
-    @centered = centered
+    @align = align
   end
 
   private
 
-  attr_reader :text, :url, :centered
+  attr_reader :text, :url, :align
 
   def wrapper_classes
     base_classes = "text-sm"
-    base_classes += " text-center" if centered
+    base_classes += " text-center" if align == :center
     base_classes
   end
 

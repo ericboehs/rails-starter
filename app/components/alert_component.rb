@@ -41,7 +41,7 @@ class AlertComponent < ViewComponent::Base
     }
   }.freeze
 
-  def initialize(message: nil, messages: nil, type: :info, dismissible: false)
+  def initialize(message: nil, messages: nil, type: :info, dismissible: nil)
     @message = message
     @messages = messages
     @type = type
