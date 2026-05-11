@@ -78,12 +78,12 @@ GEM
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
     ast (2.4.3)
-    axe-core-api (4.11.1)
+    axe-core-api (4.11.3)
       dumb_delegator
       ostruct
       virtus
-    axe-core-capybara (4.11.1)
-      axe-core-api (= 4.11.1)
+    axe-core-capybara (4.11.3)
+      axe-core-api (= 4.11.3)
       dumb_delegator
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
