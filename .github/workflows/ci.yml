@@ -10,6 +10,7 @@ permissions: {}
 jobs:
   ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     permissions:
       contents: read
@@ -19,13 +20,10 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@3ff19f5e2baf30647122352b96108b1fbe250c64 # v1
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Trust overcommit config
-        run: git config --local overcommit.verify false
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable
@@ -42,6 +40,8 @@ jobs:
       - name: Run CI pipeline
         env:
           RAILS_ENV: test
+          PARALLEL_WORKERS: 2
+          SECRET_KEY_BASE_DUMMY: 1
         run: bin/ci
 
       - name: Keep screenshots from failed system tests

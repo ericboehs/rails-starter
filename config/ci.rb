@@ -3,6 +3,7 @@
 
 CI.run do
   step "Setup", "bin/setup --skip-server"
+  step "Tests: Template bootstrap", "ruby test/template_scripts_test.rb"
 
   # Apply fixes if --fix flag is passed
   if ARGV.include?("--fix")
@@ -17,8 +18,10 @@ CI.run do
   step "Security: Importmap vulnerability audit", "bin/importmap audit"
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
 
-  step "Tests: Rails", "bin/rails test"
-  step "Tests: System", "env SKIP_COVERAGE_MINIMUM=1 bin/rails test:system"
+  # Do not let a previous CI run's cached coverage hide untested lines.
+  step "Tests: Fresh coverage", "ruby -rfileutils -e 'FileUtils.rm_rf(%q[coverage])'"
+  step "Tests: Rails", "env COVERAGE_SUITE=rails bin/rails test"
+  step "Tests: System", "env COVERAGE_SUITE=system SKIP_COVERAGE_MINIMUM=1 bin/rails test:system"
   step "Tests: Seeds", "env RAILS_ENV=test bin/rails db:seed:replant"
   step "Tests: Coverage report", "bin/coverage"
 
