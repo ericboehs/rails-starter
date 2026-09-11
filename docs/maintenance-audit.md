@@ -5,7 +5,8 @@
 Audited tracked application/tooling source and configuration, dependency versions,
 and GitHub CI run/job metadata. Secrets, encrypted credentials, local databases,
 deployment secret files, user-level lint configuration, and remote CI log contents were
-not inspected. Runtime/bootstrap checks use a temporary source-only copy, with
+not inspected during the initial audit. The separately authorized PR #113 follow-up
+reviewed Ruby setup failure diagnostics, excluding secrets. Runtime/bootstrap checks use a temporary source-only copy, with
 fresh test data and no application secrets copied from the working checkout.
 
 The starting GitHub main was `ee2632e` (its April 12 push CI passed). The local
@@ -76,6 +77,15 @@ Final local verification:
   an explicit **375px** emulated viewport (not Chrome's minimum native window
   width), verifies the exact width and absence of overflow, and confirms the
   local CSS palette. Test captures contain no real user/session data.
+
+## PR #113 CI follow-up
+
+The first GitHub run failed before the application pipeline: the pinned
+`ruby/setup-ruby` action's version catalog stopped at Ruby 4.0.2 and rejected
+4.0.6 on Ubuntu 24.04. Update the action to released v1.321.0, pinned to
+`95ef2b042f9d7a56d8268cba8559e2842e2ad01b`. Its catalog explicitly includes 4.0.6,
+and the release is older than the configured seven-day dependency cooldown.
+Keep the exact application Ruby version, SHA pinning, and existing CI gates.
 
 ## Remaining application-specific work
 
