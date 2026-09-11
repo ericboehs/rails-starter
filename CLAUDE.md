@@ -1,152 +1,53 @@
-# CLAUDE.md
+# Rails Starter: agent guidance
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Project
 
-## Project Overview
+This is **Rails Starter**, a reusable template using the `RailsStarter` namespace—not a GitHub auditing application. It provides authentication, account/profile pages, and ViewComponents to build on.
 
-This is a Rails 8.1.0 application called **GitHub Team Auditor** (`GithubTeamAuditor` module) built for auditing GitHub teams. The application uses modern Rails features including Solid libraries (Cache, Queue, Cable) and is configured for deployment with Kamal.
+- Ruby **4.0.6**, Rails **8.1.3.1**, Bundler **4.0.20**. Keep `.ruby-version`, `Gemfile`, `Gemfile.lock`, and the Docker Ruby argument aligned.
+- SQLite; separate Solid Cache/Queue/Cable databases in production.
+- Propshaft, Importmap, Turbo, Stimulus, ViewComponent, and locally compiled Tailwind v4. No browser CSS compiler or Node.js bundler.
+- Docker/Kamal support is a starting point, not a configured deployment.
 
-## Development Commands
+## Setup and checks
 
-### Code Quality & Testing
-- `bin/ci` - Run full CI pipeline (formatting, linting, security scan, tests, coverage)
-- `bin/ci --fix` - Auto-fix RuboCop and ERB lint issues before running CI checks
-- `bin/coverage` - Generate detailed test coverage report with line/branch analysis
-- `bin/watch-ci` - Monitor CI status in real-time during development
+- Rename a fresh template with `bin/rename-app PascalCaseName` **before** setup. It changes only allowlisted source references; credentials/databases stay untouched.
+- `bin/setup --skip-server` installs dependencies and verified hooks, prepares the database, compiles CSS, then exits.
+- `bin/setup` also starts `bin/dev`. `--reset` explicitly resets a database; never use it casually on an existing application.
+- `bin/dev` runs Rails with a development-only Puma Tailwind watcher.
+- `bin/rails tailwindcss:build` compiles CSS; production `assets:precompile` does this automatically.
+- `RAILS_ENV=test bin/ci` runs the full pipeline; `--fix` adds formatter auto-fixes. Requires actionlint and Chrome/Chromium locally.
+- `bundle exec ruby test/template_scripts_test.rb` exercises rename/setup in temporary fake applications without opening real servers or databases.
+- `bin/rails test` runs Rails tests.
+- `COVERAGE_SUITE=system SKIP_COVERAGE_MINIMUM=1 bin/rails test:system` runs system tests separately, deferring their coverage threshold to `bin/coverage`.
+- `bin/coverage` collates SimpleCov results with the locked gem version and enforces the final coverage gate.
+- `bin/watch-ci` watches GitHub CI status; it is not a local filesystem watcher.
 
-### Standard Rails Commands
-- `bin/rails server` - Start development server
-- `bin/rails test` - Run test suite
-- `bin/rails test:system` - Run system tests
-- `bin/setup` - Initial application setup
+## Architecture
 
-### Individual Quality Tools
-- `rubocop` - Ruby style checking (Rails Omakase style)
-- `rubocop -A` - Auto-fix Ruby style violations
-- `bundle exec reek` - Code smell detection
-- `bundle exec erb_lint --lint-all` - ERB template linting
-- `bundle exec overcommit --run` - Run all pre-commit checks (whitespace, tabs, line endings, final newlines, YAML/JSON syntax, merge conflicts, RuboCop, ErbLint, Reek)
-- `bin/rails zeitwerk:check` - Verify Rails autoloading
-- `bundle exec bundle-audit check` - Check for vulnerable gem versions
-- `brakeman` - Security vulnerability scanning
+- `app/components`: ViewComponent classes/templates. Use full utility class names or explicit Tailwind source declarations for computed names.
+- `app/assets/tailwind/application.css`: local Tailwind source. Generated `app/assets/builds` files are ignored.
+- `app/javascript/controllers`: Stimulus controllers, including the existing tooltip controller.
+- `config/ci.rb`: authoritative CI steps.
+- `test/test_helper.rb`: coverage and parallelization configuration.
+- `config/database.yml`: local SQLite configuration and production Solid databases.
+- `config/deploy.yml`: deployment placeholders; review for each generated app.
 
-## Architecture & Configuration
+## Quality standards
 
-### Modern Rails Stack
-- **Rails 8.1.0** with modern asset pipeline (Propshaft)
-- **Ruby 4.0.2**
-- **SQLite3** for all environments including production
-- **ImportMap** for JavaScript (no Node.js bundling)
-- **Hotwire** (Turbo + Stimulus) for interactivity
-- **Solid Libraries**: Database-backed cache, queue, and cable
+- **Never use `git commit --no-verify` or otherwise bypass hooks.**
+- **Never add inline RuboCop disables.** Fix the code or configure an appropriate rule in `.rubocop.yml`.
+- **Never add Reek suppressions**, either inline or new exclusions. Fix the code.
+- Existing repository lint hooks and Overcommit checks must continue working. Do not disable signature verification to make CI pass.
+- Run whole-project audits as well as file linters: Zeitwerk, Bundler audit, Importmap audit, and Brakeman.
+- Test with Minitest; browser tests use Capybara/Selenium and axe-core (WCAG 2.1 AA). See `docs/accessibility.md`.
+- SimpleCov gates: **95% line / 95% branch**, **80% per file**. Keep Rails/system suite names distinct so results merge correctly.
+- Preserve unrelated work and use conventional commit messages (`feat:`, `fix:`, `chore:`, `test:`, etc.).
 
-### Multi-Database Setup
-The application uses separate SQLite databases:
-- Primary database for application data
-- `cache` database for Solid Cache
-- `queue` database for Solid Queue
-- `cable` database for Solid Cable
+## Privacy and template safety
 
-### Code Quality Standards
-- **Overcommit**: Git hook manager enforcing trailing whitespace, hard tabs, line endings, final newlines, YAML/JSON syntax
-- **EditorConfig**: UTF-8, LF line endings, 2-space indentation (enforced by editors natively + overcommit hooks)
-- **RuboCop**: Rails Omakase configuration (DHH's opinionated style)
-- **ErbLint**: ERB template linting (Shopify's erb_lint)
-- **Reek**: Code smell detection for maintainability
-- **Zeitwerk**: Autoloading verification for Rails constants
-- **bundler-audit**: Vulnerability scanning for gem dependencies
-- **Brakeman**: Security scanning for Rails-specific vulnerabilities
-- **SimpleCov**: Test coverage with detailed HTML reports
-
-### Linting Rules (IMPORTANT)
-
-- **NEVER add inline RuboCop disables** (`# rubocop:disable`, `# rubocop:todo`). Fix the code or configure the rule in `.rubocop.yml` instead.
-- **NEVER add Reek disables** — no inline `:reek:SomeSmell` comments AND no `.reek.yml` exclusions. Fix the code instead.
-- **Claude Code lint hooks** (`.claude/hooks/`) run RuboCop, Reek, and ERB Lint automatically after every file write/edit. Fix all issues the hooks report — do not suppress them.
-
-### Testing Setup
-- **Minitest** (Rails default) for unit and integration tests
-- **Capybara + Selenium** for system tests
-- **Axe-core** for automated accessibility testing (WCAG 2.1 AA)
-- **SimpleCov** for coverage analysis with branch coverage tracking
-- Pre-commit hooks run fast lint/style checks via overcommit (not full CI)
-
-See `docs/accessibility.md` for detailed accessibility testing guide.
-
-## Key Files & Directories
-
-### Application Structure
-- `app/` - Standard Rails MVC structure (currently minimal)
-- `config/application.rb` - Main application configuration
-- `config/database.yml` - Multi-database SQLite configuration
-- `config/deploy.yml` - Kamal deployment configuration
-
-### Development Tools
-- `bin/ci` - Comprehensive CI script with formatting, linting, security, and testing
-- `bin/coverage` - Advanced coverage reporting with HTML parsing
-- `bin/watch-ci` - Real-time CI monitoring using GitHub CLI
-- `.editorconfig` - Code formatting standards
-
-### Quality Assurance
-- `overcommit` for git hook management (pre-commit lint checks)
-- `rubocop` configured with Rails Omakase
-- `erb_lint` for ERB template linting
-- `brakeman` for security scanning
-- `.editorconfig` for editor-native formatting standards
-- Pre-commit hooks enforce code quality via overcommit
-
-### Commit Messages
-
-This project follows [Conventional Commits](https://www.conventionalcommits.org/) specification:
-
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-**Types:**
-- `feat:` New feature
-- `fix:` Bug fix
-- `docs:` Documentation only changes
-- `style:` Code style changes (formatting, missing semi-colons, etc)
-- `refactor:` Code change that neither fixes a bug nor adds a feature
-- `perf:` Performance improvements
-- `test:` Adding missing tests or correcting existing tests
-- `build:` Changes that affect the build system or external dependencies
-- `ci:` Changes to CI configuration files and scripts
-- `chore:` Other changes that don't modify src or test files
-
-**Examples:**
-```bash
-git commit -m "feat: add GitHub team member validation"
-git commit -m "fix: handle API rate limiting in team fetcher"
-git commit -m "docs: update setup instructions in README"
-git commit -m "refactor: extract team analysis logic to service"
-```
-
-### Code Coverage
-
-The project enforces comprehensive test coverage using SimpleCov:
-- **Minimum coverage**: 95% overall
-- **Per-file minimum**: 80%
-- **Branch coverage**: Enabled
-- **Coverage reports**: Generated in `coverage/` directory
-- **CI integration**: Coverage reports generated automatically with tests
-
-Coverage configuration in `test/test_helper.rb`:
-- Excludes test files, config, vendor, and database files
-- Groups results by component type (Controllers, Models, Services, etc.)
-- Fails CI if coverage drops below thresholds
-
-## Development Workflow
-
-1. **Setup**: Run `bin/setup` for initial configuration
-2. **Development**: Use `bin/watch-ci` for real-time feedback during coding
-3. **Quality Check**: Run `bin/ci --fix` to auto-fix issues and verify code quality
-4. **Testing**: Use `bin/rails test` and `bin/rails test:system` for targeted testing
-5. **Coverage**: Check `bin/coverage` for detailed test coverage analysis
-
-The application emphasizes code quality with automated formatting, comprehensive testing, security scanning, and 95% code coverage requirement integrated into the development workflow.
+- Do not read or copy real credentials, keys, `.env` files, local databases, or deployment secrets during template maintenance. Use a secret-free temporary source copy for bootstrap/runtime tests.
+- Keep secret values out of files, docs, commits, and logs; prefer secret-manager/environment injection for real applications.
+- No default administrator or shared password is seeded. Create accounts through the normal registration flow.
+- Gravatar still makes external image requests. Privacy-sensitive apps should replace it; compiled Tailwind alone does not make the entire template offline.
+- Production hosts, CSP, mail settings, and credentials must be configured per application. Never deploy with template placeholders.

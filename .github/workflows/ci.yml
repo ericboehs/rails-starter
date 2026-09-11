@@ -10,6 +10,7 @@ permissions: {}
 jobs:
   ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     permissions:
       contents: read
@@ -23,9 +24,6 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Trust overcommit config
-        run: git config --local overcommit.verify false
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable
@@ -42,6 +40,8 @@ jobs:
       - name: Run CI pipeline
         env:
           RAILS_ENV: test
+          PARALLEL_WORKERS: 2
+          SECRET_KEY_BASE_DUMMY: 1
         run: bin/ci
 
       - name: Keep screenshots from failed system tests

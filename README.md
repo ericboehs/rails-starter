@@ -1,133 +1,78 @@
 # Rails Starter Template
 
-A Rails 8.1.0 application template with modern tooling and best practices.
+A Rails 8.1 application template with authentication, reusable components, and a checked-in CI pipeline.
 
-## Features
+## Stack
 
-- **User Authentication** - Secure session-based authentication system
-- **Modern Rails Stack** - Built with Rails 8.1.0, SQLite3, and modern asset pipeline
-- **Component-Based UI** - ViewComponent architecture for maintainable UI components
-- **Responsive Design** - Tailwind CSS with dark mode support
-- **Comprehensive Testing** - 99%+ test coverage with SimpleCov
+- **Ruby 4.0.6**, **Rails 8.1.3.1**, **Bundler 4.0.20**; exact dependencies are in `Gemfile.lock`.
+- SQLite in development/test; separate primary, cache, queue, and cable databases in production.
+- Propshaft, Importmap, Turbo, Stimulus, and ViewComponent. No Node.js bundler required.
+- Tailwind CSS v4 compiled locally by `tailwindcss-rails`, not a browser CDN.
+- Solid Cache, Queue, and Cable; optional Docker/Kamal deployment.
+- Minitest, Capybara/Selenium, axe accessibility checks, and SimpleCov coverage gates.
 
-## Tech Stack
+## Start a new application
 
-- **Rails 8.1.0** with modern asset pipeline (Propshaft)
-- **SQLite3** for all environments including production
-- **ImportMap** for JavaScript (no Node.js bundling required)
-- **Hotwire** (Turbo + Stimulus) for interactive features
-- **Tailwind CSS** via CDN for styling
-- **ViewComponent** for reusable UI components
-- **Solid Libraries** for database-backed cache, queue, and cable
+Use GitHub's **Use this template** action, clone the resulting repository, then install the Ruby version in `.ruby-version` with your Ruby manager.
 
-## Getting Started
+**Rename before setup:** setup starts the development server unless `--skip-server` is passed.
 
-### Prerequisites
-
-- Ruby 4.0.1
-- Rails 8.1.0+
-- SQLite3
-
-### Using This Template
-
-1. Click "Use this template" button on GitHub to create a new repository
-2. Clone your new repository
-3. Install dependencies:
-  ```bash
-  bin/setup
-  ```
-
-4. Rename the application (this also regenerates credentials for security):
-  ```bash
-  bin/rename-app YourAppName
-  ```
-
-5. Set up your credentials:
-  ```bash
-  bin/rails credentials:edit
-  ```
-
-6. Customize for your project:
-  - Update `CLAUDE.md` with your project details
-  - Modify this README.md
-
-7. Start the development server:
-  ```bash
-  bin/rails server
-  ```
-
-8. Visit `http://localhost:3000`
-
-## Development
-
-### Code Quality
-
-Run the full CI pipeline (formatting, linting, security scan, tests):
-
-```bash
-bin/ci
+```sh
+bin/rename-app YourAppName
+bin/setup --skip-server
+bin/dev
 ```
 
-Auto-fix formatting issues:
+Visit **http://localhost:3000**. Create an account at `/users/new`; the template does not seed a shared administrator or default password.
 
-```bash
-bin/ci --fix
+`bin/rename-app` takes one PascalCase name (for example, `PsstWeb`), works from any directory, and updates a fixed set of source/documentation references. It refuses symlink destinations and an already-renamed application. Review the resulting README, agent guidance, and deployment settings before committing.
+
+### Credentials are separate
+
+Renaming **does not read, regenerate, or overwrite credentials**, and does not reset databases. Never copy another application's `.env`, master key, encrypted credentials, local databases, or deployment secrets into a new application.
+
+Set up fresh application secrets through your secret manager and environment injection when needed. Keep keys and secret values out of source control, documentation, and command logs. This template ships no encrypted application credentials or master keys; development/test can boot without production credentials.
+
+### Development commands
+
+```sh
+bin/setup --skip-server              # install gems/hooks, prepare DB, compile CSS, then exit
+bin/setup                           # same, then start bin/dev
+bin/dev                             # Rails server plus a development-only Tailwind watcher
+bin/rails tailwindcss:build          # one-off CSS rebuild
+bin/rails assets:precompile          # production pipeline also builds Tailwind
+bin/rails test                      # Rails tests, with coverage thresholds
+COVERAGE_SUITE=system SKIP_COVERAGE_MINIMUM=1 bin/rails test:system
+bin/coverage                        # merge suites and enforce final coverage thresholds
+RAILS_ENV=test bin/ci                # full checked-in CI pipeline
 ```
 
-Watch CI status in real-time:
+`bin/setup --reset` is explicitly destructive: it resets the selected environment's database. Normal setup/rename does not drop databases. Unknown setup options fail before commands start.
 
-```bash
-bin/watch-ci
-```
+CSS source is `app/assets/tailwind/application.css`; output under `app/assets/builds` is ignored by Git. Keep complete class names in source or add explicit Tailwind source declarations for dynamically constructed tokens, as done for `AvatarComponent`.
 
-### Testing
+## Quality checks
 
-Run tests:
+`bin/ci` runs:
 
-```bash
-bin/rails test
-```
+- Setup and isolated template-script tests (no real databases or servers in those fixtures).
+- Overcommit hooks: Ruby/ERB/Reek and file-format checks.
+- Actionlint and Rails Zeitwerk autoload checks.
+- Bundler/Importmap dependency audits and Brakeman code analysis.
+- Rails tests, browser/accessibility tests, seed validation, and merged coverage enforcement.
 
-Generate coverage report:
+Install `actionlint` and Chrome/Chromium locally to run the same checks. CI installs its own tools. `bin/ci --fix` additionally runs formatting auto-fixes.
 
-```bash
-bin/coverage
-```
+Coverage gates are **95% line**, **95% branch**, and **80% per file**. Rails and system tests use separate suite names so merging does not overwrite earlier results. System tests can defer thresholds until `bin/coverage`; the final report fails when coverage is insufficient or empty. CI clears previous coverage before running tests so stale results cannot inflate it. Reports remain under ignored `coverage/`.
 
-### Code Standards
+Never bypass Git hooks or add inline RuboCop/Reek suppressions. Prefer conventional commits. See [CLAUDE.md](CLAUDE.md), [developer tools](bin/README.md), and [the maintenance audit](docs/maintenance-audit.md).
 
-- **Overcommit**: Git hook management for pre-commit lint checks
-- **EditorConfig**: UTF-8, LF line endings, 2-space indentation
-- **RuboCop**: Rails Omakase configuration
-- **ErbLint**: ERB template linting
-- **SimpleCov**: 95% minimum coverage requirement
-- **Conventional Commits**: Structured commit messages
+## Before deployment or privacy-sensitive use
 
-## Architecture
-
-### Database Setup
-
-Multi-database configuration with separate SQLite databases:
-- Primary database for application data
-- Cache database for Solid Cache
-- Queue database for Solid Queue
-- Cable database for Solid Cable
-
-### Component System
-
-The application uses ViewComponent for UI components:
-- `Auth::*` components for authentication flows
-- `AvatarComponent` for user avatars
-- `AlertComponent` for flash messages and errors
-- `UserPageComponent` for profile page layouts
-
-## Contributing
-
-1. Follow the existing code style and conventions
-2. Ensure tests pass: `bin/ci`
-3. Maintain test coverage above 95%
-4. Use conventional commit messages
+- Configure your application's host allowlist, CSP, mail delivery, and deployment settings; the template's placeholders are not production configuration.
+- Existing Gravatar support requests external images. Disable or replace it for offline/private applications such as a local session companion.
+- Production Docker builds exclude development **and test** gems and build CSS locally. Docker/Kamal deployment requires its own validation and explicitly provisioned secrets.
 
 ## License
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+[MIT](https://opensource.org/licenses/MIT).

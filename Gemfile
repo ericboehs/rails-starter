@@ -1,11 +1,13 @@
 source "https://rubygems.org"
 
-ruby "4.0.2"
+ruby "4.0.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.1"
+gem "rails", "~> 8.1.3", ">= 8.1.3.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
+# Compile Tailwind locally; no browser CDN or Node.js toolchain.
+gem "tailwindcss-rails", "~> 4.0"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
 # Use the Puma web server [https://github.com/puma/puma]

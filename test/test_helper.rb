@@ -3,6 +3,7 @@ require "simplecov"
 
 # SimpleCov configuration
 SimpleCov.start "rails" do
+  command_name ENV.fetch("COVERAGE_SUITE", "rails")
   # Enable coverage for branches (Ruby 2.5+) - must come before minimum_coverage
   enable_coverage :branch
 
